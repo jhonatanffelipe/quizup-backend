@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const categoriesRoutes = require('./categories.routes');
+const categoriesRoutes = require('../modules/questions/routes/categories.routes');
 
 const routes = Router();
 
