@@ -34,7 +34,7 @@ class ResetPasswordUseCase {
       );
     }
 
-    const user = await this.usersRepository.findById(String(resetPasswordToken.user?.id));
+    const user = await this.usersRepository.findById(resetPasswordToken.userId);
 
     if (!user) {
       throw new AppError('Usuário não encontrado.', 400);
@@ -46,8 +46,8 @@ class ResetPasswordUseCase {
 
     await this.usersRepository.update(user);
 
-    await this.resetPasswordTokensRepository.deleteByUserId(String(user.id));
-    await this.usersTokensRepository.deleteByUserId(String(user.id));
+    await this.resetPasswordTokensRepository.deleteByUserId(user.id);
+    await this.usersTokensRepository.deleteByUserId(user.id);
   }
 }
 

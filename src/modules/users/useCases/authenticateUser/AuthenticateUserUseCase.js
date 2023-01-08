@@ -1,9 +1,9 @@
 const { sign, verify } = require('jsonwebtoken');
-const { compare } = require('bcryptjs');
 
 const auth = require('../../../../config/auth');
 const AppError = require('../../../../shared/infra/http/errors/AppError');
 const MomentDateProvider = require('../../../../shared/providers/DateProvider/MomentDateProvider');
+const BCryptProvider = require('../../../../shared/providers/HashProvider/BCryptProvider');
 const UsersRepository = require('../../infra/knex/repositories/UsersRepository');
 const UsersTokensRepository = require('../../infra/knex/repositories/UsersTokensRepository');
 
@@ -20,6 +20,7 @@ class AuthenticateUserUseCase {
   constructor() {
     this.usersRopository = new UsersRepository();
     this.usersTokensRopository = new UsersTokensRepository();
+    this.hashProvider = new BCryptProvider();
   }
 
   async execute({ email, password }) {
@@ -33,7 +34,7 @@ class AuthenticateUserUseCase {
 
     const userId = user.id ? user.id : '';
 
-    const passwordMatch = await compare(password, user.password);
+    const passwordMatch = await this.hashProvider.comparePasswords(password, user.password);
 
     if (!passwordMatch) {
       throw new AppError('Email or password incorrect!');
