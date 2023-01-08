@@ -1,13 +1,13 @@
 const { hashSync } = require('bcryptjs');
 const knex = require('../../../../config/db');
-const AppError = require('../../../../shared/errors/AppError');
+const AppError = require('../../../../shared/infra/http/errors/AppError');
 
 class CreateUserUseCase {
   async execute(name, email, password, confirmPassword, isAdmin) {
     try {
-      const user = await knex('users').where({ email });
+      const user = await knex('users').where({ email }).first();
 
-      if (user.length > 0) {
+      if (user) {
         throw new AppError('Já existe um usuário criado com esse e-mail.');
       }
 
@@ -33,7 +33,7 @@ class CreateUserUseCase {
         isAdmin,
       });
     } catch (error) {
-      throw new AppError('Erro ao inserir o usuário, por favor contate o suporte técnico.');
+      throw new AppError(error);
     }
   }
 }

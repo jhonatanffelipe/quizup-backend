@@ -11,10 +11,10 @@ module.exports = {
   },
   migrations: {
     tableName: 'knex_migrations',
-    directory: `${__dirname}/src/shared/database/migrations`,
+    directory: `${__dirname}/src/shared/infra/knex/migrations`,
   },
   seeds: {
     tableName: 'knex_seeds',
-    directory: `${__dirname}/src/shared/database/seeds`,
+    directory: `${__dirname}/src/shared/infra/knex/seeds`,
   },
 };

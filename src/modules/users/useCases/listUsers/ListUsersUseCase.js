@@ -1,5 +1,5 @@
 const knex = require('../../../../config/db');
-const AppError = require('../../../../shared/errors/AppError');
+const AppError = require('../../../../shared/infra/http/errors/AppError');
 
 class ListUsersUseCase {
   async excute() {
@@ -10,7 +10,7 @@ class ListUsersUseCase {
         return user;
       });
     } catch (error) {
-      throw new AppError('Erro ao listar os usuários, por favor contate o suporte técnico.');
+      throw new AppError(error);
     }
   }
 }

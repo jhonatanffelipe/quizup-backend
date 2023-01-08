@@ -5,8 +5,8 @@ const { json } = require('express');
 const express = require('express');
 
 const knex = require('./config/db');
-const routes = require('./routes/index.routes');
-const ErrorHandler = require('./shared/errors/ErrorHandler');
+const ErrorHandler = require('./shared/infra/http/errors/ErrorHandler');
+const routes = require('./shared/infra/http/routes/index.routes');
 
 dotenv.config();
 

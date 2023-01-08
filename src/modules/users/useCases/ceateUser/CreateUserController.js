@@ -1,18 +1,19 @@
-const AppError = require('../../../../shared/errors/AppError');
+const AppError = require('../../../../shared/infra/http/errors/AppError');
 const CreateUserUseCase = require('./CreateUserUseCase');
 
 class CreateUserController {
   async handle(request, response) {
-    const createUserUseCase = new CreateUserUseCase();
+    try {
+      const createUserUseCase = new CreateUserUseCase();
 
-    const { name, email, password, confirmPassword, isAdmin } = request.body;
+      const { name, email, password, confirmPassword, isAdmin } = request.body;
 
-    await createUserUseCase
-      .execute(name, email, password, confirmPassword, isAdmin)
-      .then(() => response.status(201).send())
-      .catch(error => {
-        throw new AppError(error);
-      });
+      await createUserUseCase.execute(name, email, password, confirmPassword, isAdmin);
+
+      return response.status(201).send();
+    } catch (error) {
+      throw new AppError(error);
+    }
   }
 }
 

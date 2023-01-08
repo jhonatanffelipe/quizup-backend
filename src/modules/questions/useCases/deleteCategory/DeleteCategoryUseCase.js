@@ -1,12 +1,12 @@
 const knex = require('../../../../config/db');
-const AppError = require('../../../../shared/errors/AppError');
+const AppError = require('../../../../shared/infra/http/errors/AppError');
 
 class DeleteCategoryUseCase {
   async execute(id) {
     try {
-      const categoryAlreadExists = await knex('categories').where({ id });
+      const categoryAlreadExists = await knex('categories').where({ id }).first();
 
-      if (categoryAlreadExists.length === 0) {
+      if (!categoryAlreadExists.length) {
         throw new AppError('Categoria não encontrada');
       }
 

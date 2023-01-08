@@ -1,9 +1,9 @@
 const { Router } = require('express');
 
-const CreateCategoryController = require('../useCases/createCategory/CreateCategoryContoller');
-const DeleteCategoryController = require('../useCases/deleteCategory/DeleteCategoryContoller');
-const ListCategoriesController = require('../useCases/listCategories/ListCategoriesContoller');
-const UpdateCategoryController = require('../useCases/updateCategory/UpdateCategoryContoller');
+const CreateCategoryController = require('../../../useCases/createCategory/CreateCategoryContoller');
+const DeleteCategoryController = require('../../../useCases/deleteCategory/DeleteCategoryContoller');
+const ListCategoriesController = require('../../../useCases/listCategories/ListCategoriesContoller');
+const UpdateCategoryController = require('../../../useCases/updateCategory/UpdateCategoryContoller');
 
 const categoriesRoutes = Router();
 

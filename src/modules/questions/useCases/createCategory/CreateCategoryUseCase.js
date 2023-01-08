@@ -1,12 +1,12 @@
 const knex = require('../../../../config/db');
-const AppError = require('../../../../shared/errors/AppError');
+const AppError = require('../../../../shared/infra/http/errors/AppError');
 
 class CreateCategoryUseCase {
   async execute(description) {
     try {
-      const descriptionAlreadExists = await knex('categories').where({ description });
+      const descriptionAlreadExists = await knex('categories').where({ description }).first();
 
-      if (descriptionAlreadExists.length > 0) {
+      if (descriptionAlreadExists) {
         throw new AppError('Já existe uma categoria cadastrada com essa descrição');
       }
 

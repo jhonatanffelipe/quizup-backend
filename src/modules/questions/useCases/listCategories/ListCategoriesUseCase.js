@@ -1,5 +1,5 @@
 const knex = require('../../../../config/db');
-const AppError = require('../../../../shared/errors/AppError');
+const AppError = require('../../../../shared/infra/http/errors/AppError');
 
 class ListCategoriesUseCase {
   async execute() {
