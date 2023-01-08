@@ -1,17 +1,16 @@
-const knex = require('../../../../config/db');
-const AppError = require('../../../../shared/infra/http/errors/AppError');
+const UsersRepository = require('../../infra/knex/repositories/UsersRepository');
 
 class ListUsersUseCase {
+  constructor() {
+    this.usersRepository = new UsersRepository();
+  }
+
   async excute() {
-    try {
-      const users = await knex('users').orderBy('name');
-      return users.map(user => {
-        delete user.password;
-        return user;
-      });
-    } catch (error) {
-      throw new AppError(error);
-    }
+    const users = await this.usersRepository.find();
+    return users.map(user => {
+      delete user.password;
+      return user;
+    });
   }
 }
 

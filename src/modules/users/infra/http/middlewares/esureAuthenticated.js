@@ -1,10 +1,11 @@
 const { verify } = require('jsonwebtoken');
 
 const auth = require('../../../../../config/auth');
-const knex = require('../../../../../config/db');
 const AppError = require('../../../../../shared/infra/http/errors/AppError');
+const UsersTokensRepository = require('../../knex/repositories/UsersTokensRepository');
 
 async function ensureAuthenticated(request, response, next) {
+  const usersTokensRepository = new UsersTokensRepository();
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
@@ -16,7 +17,7 @@ async function ensureAuthenticated(request, response, next) {
   try {
     const { sub } = verify(accessToken, auth.secretAccessToken);
 
-    const usersToken = await knex('usersTokens').where({ userId: sub, accessToken }).first();
+    const usersToken = await usersTokensRepository.findByUserIdAndAccessToken({ userId: sub, accessToken });
 
     if (!usersToken) {
       throw new AppError('Token inválido!', 401);

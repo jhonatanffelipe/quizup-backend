@@ -1,9 +1,10 @@
 const AppError = require('./AppError');
 
 const ErrorHandler = (error, _, response, next) => {
+  // console.log(error);
   if (error instanceof AppError) {
     return response.status(error.statusCode).json({
-      error: error.message.message || error.message,
+      error: error?.message,
     });
   }
 

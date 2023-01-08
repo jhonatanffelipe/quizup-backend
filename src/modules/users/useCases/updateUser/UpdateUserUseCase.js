@@ -1,45 +1,42 @@
 const { hashSync } = require('bcryptjs');
-const knex = require('../../../../config/db');
 const AppError = require('../../../../shared/infra/http/errors/AppError');
+const UsersRepository = require('../../infra/knex/repositories/UsersRepository');
+const UsersTokensRepository = require('../../infra/knex/repositories/UsersTokensRepository');
 
 class UpdateUserUseCase {
+  constructor() {
+    this.usersRepository = new UsersRepository();
+    this.usersTokensRepository = new UsersTokensRepository();
+  }
+
   async execute({ id, name, password, confirmPassword }) {
-    try {
-      const user = await knex('users').where({ id }).first();
+    const user = await this.usersRepository.findById(id);
 
-      if (!user) {
-        throw new AppError('Usuário não encontrado.');
+    if (!user) {
+      throw new AppError('Usuário não encontrado.');
+    }
+
+    if (password) {
+      if (password !== confirmPassword) {
+        throw new AppError('Senhas não são iguais, tente novamente!.');
       }
 
-      if (password) {
-        if (password !== confirmPassword) {
-          throw new AppError('Senhas não são iguais, tente novamente!.');
-        }
+      const validate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{6,}$/;
 
-        const validate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{6,}$/;
-
-        if (!validate.test(password)) {
-          throw new AppError(
-            'Senha incorreta! Deve conter no mínimo 6 caracteres, ao menos um dígito, ao menos uma letra minúscula, ao menos um caractere especial e ao menos letra maiúscula',
-            400,
-          );
-        }
-
-        const passwordHash = hashSync(password, 8);
-
-        await knex('users').where({ id }).update({
-          name,
-          password: passwordHash,
-        });
-
-        await knex('usersTokens').where({ userId: id }).del();
-      } else {
-        await knex('users').where({ id }).update({
-          name,
-        });
+      if (!validate.test(password)) {
+        throw new AppError(
+          'Senha incorreta! Deve conter no mínimo 6 caracteres, ao menos um dígito, ao menos uma letra minúscula, ao menos um caractere especial e ao menos letra maiúscula',
+          400,
+        );
       }
-    } catch (error) {
-      throw new AppError(error);
+
+      const passwordHash = hashSync(password, 8);
+
+      await this.usersRepository.update({ id, name, password: passwordHash });
+
+      await this.usersTokensRepository.deleteByUserId(id);
+    } else {
+      await this.usersRepository.update({ id, name });
     }
   }
 }
