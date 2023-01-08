@@ -10,6 +10,8 @@
     "sourceType": "module"
   },
   "rules": {
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "class-methods-use-this": "off",
+    "no-shadow": "off"
   }
 }
