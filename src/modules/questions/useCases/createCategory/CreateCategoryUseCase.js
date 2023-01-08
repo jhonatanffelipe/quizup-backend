@@ -1,7 +1,7 @@
 const knex = require('../../../../config/db');
 const AppError = require('../../../../shared/errors/AppError');
 
-class CreateCategoryService {
+class CreateCategoryUseCase {
   async execute(description) {
     await knex('categories')
       .where({ description })
@@ -16,4 +16,4 @@ class CreateCategoryService {
   }
 }
 
-module.exports = CreateCategoryService;
+module.exports = CreateCategoryUseCase;

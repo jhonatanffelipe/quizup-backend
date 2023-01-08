@@ -1,12 +1,12 @@
-const CreateCategoryService = require('./CreateCategoryService');
+const CreateCategoryUseCase = require('./CreateCategoryUseCase');
 
 class CreateCategoryController {
   async handle(request, response) {
-    const createCategoryService = new CreateCategoryService();
+    const createCategoryUseCase = new CreateCategoryUseCase();
 
     const { description } = request.body;
 
-    await createCategoryService.execute(description);
+    await createCategoryUseCase.execute(description);
 
     return response.status(201).send();
   }

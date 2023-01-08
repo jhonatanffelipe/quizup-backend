@@ -1,12 +1,12 @@
-const DeleteCategoryService = require('./DeleteCategoryService');
+const DeleteCategoryUseCase = require('./DeleteCategoryUseCase');
 
 class DeleteCategoryController {
   async handle(request, response) {
-    const deleteCategoryService = new DeleteCategoryService();
+    const deleteCategoryUseCase = new DeleteCategoryUseCase();
 
     const { id } = request.params;
 
-    await deleteCategoryService.execute(id);
+    await deleteCategoryUseCase.execute(id);
 
     return response.send();
   }

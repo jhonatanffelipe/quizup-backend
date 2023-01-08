@@ -1,7 +1,7 @@
 const knex = require('../../../../config/db');
 const AppError = require('../../../../shared/errors/AppError');
 
-class ListCategoriesService {
+class ListCategoriesUseCase {
   async execute() {
     const categories = await knex('categories')
       .orderBy('description')
@@ -14,4 +14,4 @@ class ListCategoriesService {
   }
 }
 
-module.exports = ListCategoriesService;
+module.exports = ListCategoriesUseCase;

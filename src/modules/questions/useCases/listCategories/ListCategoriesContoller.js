@@ -1,10 +1,10 @@
-const ListCategoriesService = require('./ListCategoriesService');
+const ListCategoriesUseCase = require('./ListCategoriesUseCase');
 
 class ListCategoriesController {
   async handle(request, response) {
-    const listCategoriesService = new ListCategoriesService();
+    const listCategoriesUseCase = new ListCategoriesUseCase();
 
-    const categories = await listCategoriesService.execute();
+    const categories = await listCategoriesUseCase.execute();
 
     return response.status(200).json(categories);
   }

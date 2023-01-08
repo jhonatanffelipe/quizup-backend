@@ -1,13 +1,13 @@
-const UpdateCategoryService = require('./UpdateCategoryService');
+const UpdateCategoryUseCase = require('./UpdateCategoryUseCase');
 
 class UpdateCategoryController {
   async handle(request, response) {
-    const updateCategoryService = new UpdateCategoryService();
+    const updateCategoryUseCase = new UpdateCategoryUseCase();
 
     const { id } = request.params;
     const { description } = request.body;
 
-    await updateCategoryService.execute(id, description);
+    await updateCategoryUseCase.execute(id, description);
 
     return response.send();
   }

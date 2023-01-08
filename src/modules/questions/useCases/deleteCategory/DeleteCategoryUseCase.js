@@ -1,7 +1,7 @@
 const knex = require('../../../../config/db');
 const AppError = require('../../../../shared/errors/AppError');
 
-class DeleteCategoryService {
+class DeleteCategoryUseCase {
   async execute(id) {
     await knex('categories')
       .where({ id })
@@ -18,4 +18,4 @@ class DeleteCategoryService {
   }
 }
 
-module.exports = DeleteCategoryService;
+module.exports = DeleteCategoryUseCase;

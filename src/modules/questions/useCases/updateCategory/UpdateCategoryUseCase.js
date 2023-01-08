@@ -1,7 +1,7 @@
 const knex = require('../../../../config/db');
 const AppError = require('../../../../shared/errors/AppError');
 
-class UpdateCategoryService {
+class UpdateCategoryUseCase {
   async execute(id, description) {
     try {
       const categoryAlreadExists = await knex('categories')
@@ -27,4 +27,4 @@ class UpdateCategoryService {
   }
 }
 
-module.exports = UpdateCategoryService;
+module.exports = UpdateCategoryUseCase;
