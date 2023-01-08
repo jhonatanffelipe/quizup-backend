@@ -4,6 +4,7 @@ require('express-async-errors');
 const { json } = require('express');
 const express = require('express');
 
+const upload = require('./config/upload');
 const knex = require('./config/db');
 const AppError = require('./shared/infra/http/errors/AppError');
 const ErrorHandler = require('./shared/infra/http/errors/ErrorHandler');
@@ -16,6 +17,8 @@ const app = express();
 knex();
 
 app.use(json());
+
+app.use('/avatar', express.static(`${upload.tmpFolder}/avatar`));
 
 try {
   app.use(routes);

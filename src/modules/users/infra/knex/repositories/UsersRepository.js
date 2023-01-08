@@ -25,17 +25,14 @@ class UsersRepository {
     return user;
   }
 
-  async update({ id, name, password }) {
-    if (password) {
-      await knex('users').where({ id }).update({
-        name,
-        password,
-      });
-    } else {
-      await knex('users').where({ id }).update({
-        name,
-      });
-    }
+  async update({ id, name, password, avatar, isActive, isAdmin }) {
+    await knex('users').where({ id }).update({
+      name,
+      avatar,
+      password,
+      isActive,
+      isAdmin,
+    });
   }
 }
 

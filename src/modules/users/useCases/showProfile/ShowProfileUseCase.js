@@ -8,6 +8,7 @@ class ShowProfileUserUseCase {
   async execute({ id }) {
     const user = await this.usersRepository.findById(id);
     delete user.password;
+    user.avatar = `${process.env.BACKEND_APP_URL}/avatar/${user.avatar}`;
     return user;
   }
 }
