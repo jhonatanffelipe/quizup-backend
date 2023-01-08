@@ -1,13 +1,14 @@
-exports.up = (knex) => knex.schema.createTable('topcs', (table) => {
-  table.uuid('id').unique().primary().defaultTo(knex.raw('public.uuid_generate_v4()'));
-  table.integer('sequence').unique();
-  table.text('description').notNullable();
-  table.uuid('categoryId').notNullable();
+exports.up = knex =>
+  knex.schema.createTable('topcs', table => {
+    table.uuid('id').unique().primary().defaultTo(knex.raw('public.uuid_generate_v4()'));
+    table.integer('sequence').unique();
+    table.text('description').notNullable();
+    table.uuid('categoryId').notNullable();
 
-  table.timestamp('createdAt').defaultTo(knex.fn.now());
-  table.timestamp('updatedAt').defaultTo(knex.fn.now());
+    table.timestamp('createdAt').defaultTo(knex.fn.now());
+    table.timestamp('updatedAt').defaultTo(knex.fn.now());
 
-  table.foreign('categoryId').references('categories.id');
-});
+    table.foreign('categoryId').references('categories.id');
+  });
 
-exports.down = (knex) => knex.schema.dropTable('topcs');
+exports.down = knex => knex.schema.dropTable('topcs');

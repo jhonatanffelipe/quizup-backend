@@ -1,6 +1,6 @@
 // Exemplo de seed, essão fará nada na aplicação
 
-exports.seed = async (knex) => {
+exports.seed = async knex => {
   await knex('categories');
   //   await knex('categories').del()
   //     .then(async () => {

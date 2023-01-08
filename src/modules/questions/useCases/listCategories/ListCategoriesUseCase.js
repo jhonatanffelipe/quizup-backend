@@ -3,14 +3,11 @@ const AppError = require('../../../../shared/errors/AppError');
 
 class ListCategoriesUseCase {
   async execute() {
-    const categories = await knex('categories')
-      .orderBy('description')
-      .then((categories) => categories)
-      .catch((error) => {
-        throw new AppError(error);
-      });
-
-    return categories;
+    try {
+      return await knex('categories').orderBy('description');
+    } catch (error) {
+      throw new AppError(error);
+    }
   }
 }
 
