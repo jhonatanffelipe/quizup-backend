@@ -5,7 +5,6 @@ const { json } = require('express');
 const express = require('express');
 
 const upload = require('./config/upload');
-const knex = require('./config/db');
 const AppError = require('./shared/infra/http/errors/AppError');
 const ErrorHandler = require('./shared/infra/http/errors/ErrorHandler');
 const routes = require('./shared/infra/http/routes/index.routes');
@@ -13,8 +12,6 @@ const routes = require('./shared/infra/http/routes/index.routes');
 dotenv.config();
 
 const app = express();
-
-knex();
 
 app.use(json());
 
