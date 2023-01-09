@@ -21,8 +21,6 @@ class UpdateProfileAvatarUseCase {
 
     await this.storageProvider.save(avatarFile, 'avatar');
 
-    user.avatar = avatarFile;
-
     await this.usersRepository.update({
       id: user.id,
       avatar: avatarFile,

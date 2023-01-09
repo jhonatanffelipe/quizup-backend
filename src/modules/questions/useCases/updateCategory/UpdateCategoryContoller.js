@@ -7,7 +7,7 @@ class UpdateCategoryController {
     const { id } = request.params;
     const { description } = request.body;
 
-    await updateCategoryUseCase.execute(id, description);
+    await updateCategoryUseCase.execute({ id, description });
 
     return response.send();
   }

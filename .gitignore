@@ -26,5 +26,6 @@ yarn-error.log*
 yarn.lock
 
 tmp/*
-!tmp/.gitkeep
+!tmp/avatar/.gitkeep
+!tmp/category/.gitkeep
 

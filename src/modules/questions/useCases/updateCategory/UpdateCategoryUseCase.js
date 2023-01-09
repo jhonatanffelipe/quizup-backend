@@ -1,25 +1,25 @@
-const knex = require('../../../../config/db');
 const AppError = require('../../../../shared/infra/http/errors/AppError');
+const CategoriesRepository = require('../../infra/knex/repositories/CategoriesRepository');
 
 class UpdateCategoryUseCase {
-  async execute(id, description) {
-    try {
-      const categoryAlreadExists = await knex('categories').where({ id }).first();
+  constructor() {
+    this.categoriesRepository = new CategoriesRepository();
+  }
 
-      if (!categoryAlreadExists) {
-        throw new AppError('Categoria não encontrada', 400);
-      }
+  async execute({ id, description }) {
+    const categoryAlreadExists = await this.categoriesRepository.findById(id);
 
-      const descriptionAlreadExists = await knex('categories').where({ description }).first();
-
-      if (descriptionAlreadExists && descriptionAlreadExists.id !== id) {
-        throw new AppError('Já existe uma categoria cadastrada com essa descrição', 400);
-      }
-
-      await knex('categories').where({ id }).update({ description });
-    } catch (error) {
-      throw new AppError(error);
+    if (!categoryAlreadExists) {
+      throw new AppError('Categoria não encontrada', 400);
     }
+
+    const descriptionAlreadExists = this.categoriesRepository.findByDescription(description);
+
+    if (descriptionAlreadExists && descriptionAlreadExists.id !== id) {
+      throw new AppError('Já existe uma categoria cadastrada com essa descrição', 400);
+    }
+
+    await this.categoriesRepository.update({ id, description });
   }
 }
 

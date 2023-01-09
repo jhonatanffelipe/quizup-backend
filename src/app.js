@@ -13,9 +13,10 @@ dotenv.config();
 
 const app = express();
 
-app.use(json());
+app.use(json({ limit: '50mb' }));
 
 app.use('/avatar', express.static(`${upload.tmpFolder}/avatar`));
+app.use('/category', express.static(`${upload.tmpFolder}/category`));
 
 try {
   app.use(routes);
@@ -23,7 +24,6 @@ try {
   throw new AppError(error);
 }
 
-// eslint-disable-next-line no-unused-vars
 app.use(ErrorHandler);
 
 module.exports = app;

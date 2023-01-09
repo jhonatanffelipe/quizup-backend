@@ -1,19 +1,19 @@
-const knex = require('../../../../config/db');
 const AppError = require('../../../../shared/infra/http/errors/AppError');
+const CategoriesRepository = require('../../infra/knex/repositories/CategoriesRepository');
 
 class DeleteCategoryUseCase {
+  constructor() {
+    this.categoriesRepository = new CategoriesRepository();
+  }
+
   async execute(id) {
-    try {
-      const categoryAlreadExists = await knex('categories').where({ id }).first();
+    const categoryAlreadExists = await this.categoriesRepository.findById(id);
 
-      if (!categoryAlreadExists.length) {
-        throw new AppError('Categoria não encontrada');
-      }
-
-      await knex('categories').where({ id }).del();
-    } catch (error) {
-      throw new AppError(error);
+    if (!categoryAlreadExists.length) {
+      throw new AppError('Categoria não encontrada');
     }
+
+    await this.categoriesRepository.delete(id);
   }
 }
 
