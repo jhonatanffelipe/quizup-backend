@@ -1,32 +1,53 @@
 const knex = require('../../../../../config/db');
+const AppError = require('../../../../../shared/infra/http/errors/AppError');
 
 class UsersTokensRepository {
   async create({ userId, accessToken, accessTokenExpiresDate, refreshToken, refreshTokenExpiresDate }) {
-    await knex('usersTokens').insert({
-      userId,
-      accessToken,
-      accessTokenExpiresDate,
-      refreshToken,
-      refreshTokenExpiresDate,
-    });
+    try {
+      await knex('usersTokens').insert({
+        userId,
+        accessToken,
+        accessTokenExpiresDate,
+        refreshToken,
+        refreshTokenExpiresDate,
+      });
+    } catch (error) {
+      throw new AppError('Erro ao gerar token do usuário. Por favor contate a equipe de suporte.');
+    }
   }
 
   async findByUserId(userId) {
-    const userToken = await knex('usersTokens').where({ userId });
-    return userToken;
+    try {
+      const userToken = await knex('usersTokens').where({ userId });
+      return userToken;
+    } catch (error) {
+      throw new AppError('Erro ao encontrar token do usuário. Por favor contate a equipe de suporte.');
+    }
   }
 
   async findByUserIdAndAccessToken({ userId, accessToken }) {
-    const userToken = await knex('usersTokens').where({ userId, accessToken }).first();
-    return userToken;
+    try {
+      const userToken = await knex('usersTokens').where({ userId, accessToken }).first();
+      return userToken;
+    } catch (error) {
+      throw new AppError('Erro ao encontrar token do usuário. Por favor contate a equipe de suporte.');
+    }
   }
 
   async delete(id) {
-    await knex('usersTokens').where({ id }).del();
+    try {
+      await knex('usersTokens').where({ id }).del();
+    } catch (error) {
+      throw new AppError('Erro ao deletar token do usuário. Por favor contate a equipe de suporte.');
+    }
   }
 
   async deleteByUserId(userId) {
-    await knex('usersTokens').where({ userId }).del();
+    try {
+      await knex('usersTokens').where({ userId }).del();
+    } catch (error) {
+      throw new AppError('Erro ao deletar tokens do usuário. Por favor contate a equipe de suporte.');
+    }
   }
 }
 

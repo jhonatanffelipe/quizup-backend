@@ -9,8 +9,8 @@ class DeleteCategoryUseCase {
   async execute(id) {
     const categoryAlreadExists = await this.categoriesRepository.findById(id);
 
-    if (!categoryAlreadExists.length) {
-      throw new AppError('Categoria não encontrada');
+    if (!categoryAlreadExists) {
+      throw new AppError('Categoria não encontrada.');
     }
 
     await this.categoriesRepository.delete(id);

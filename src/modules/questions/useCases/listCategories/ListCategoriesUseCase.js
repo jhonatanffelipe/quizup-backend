@@ -8,7 +8,7 @@ class ListCategoriesUseCase {
   async execute() {
     const categories = await this.categoriesRepository.find();
     return categories.map(category => {
-      category.image = `${process.env.BACKEND_APP_URL}/category/${category.image}`;
+      category.image = category.image && `${process.env.BACKEND_APP_URL}/category/${category.image}`;
       return category;
     });
   }

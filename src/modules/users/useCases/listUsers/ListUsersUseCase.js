@@ -9,7 +9,7 @@ class ListUsersUseCase {
     const users = await this.usersRepository.find();
     return users.map(user => {
       delete user.password;
-      user.avatar = `${process.env.BACKEND_APP_URL}/avatar/${user.avatar}`;
+      user.avatar = user.avatar && `${process.env.BACKEND_APP_URL}/avatar/${user.avatar}`;
       return user;
     });
   }

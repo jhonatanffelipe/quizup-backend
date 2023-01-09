@@ -6,6 +6,7 @@ const uploadConfig = require('../../../../../config/upload');
 
 const CreateUserController = require('../../../useCases/createUser/CreateUserController');
 const ListUsersController = require('../../../useCases/listUsers/ListUsersController');
+const ListUserByIdController = require('../../../useCases/listUserById/ListUserByIdController');
 const ShowProfileController = require('../../../useCases/showProfile/ShowProfileController');
 const UpdateProfileController = require('../../../useCases/updateProfile/UpdateProfileController');
 const UpdateProfileAvatarController = require('../../../useCases/updateProfileAvatar/UpdateProfileAvatarController');
@@ -18,6 +19,7 @@ const uploadAvatar = multer(uploadConfig);
 
 const createUserController = new CreateUserController();
 const listUsersController = new ListUsersController();
+const listUserByIdController = new ListUserByIdController();
 const updateUserController = new UpdateUserController();
 const updateProfileController = new UpdateProfileController();
 const showProfileController = new ShowProfileController();
@@ -30,6 +32,9 @@ usersRoutes.get('/', listUsersController.handle);
 usersRoutes.put('/profile', updateProfileController.handle);
 usersRoutes.get('/profile', showProfileController.handle);
 usersRoutes.patch('/avatar', uploadAvatar.single('avatar'), updateProfileAvatarController.handle);
-usersRoutes.put('/:id', ensureAdmin, updateUserController.handle);
+
+usersRoutes.use(ensureAdmin);
+usersRoutes.get('/:id', listUserByIdController.handle);
+usersRoutes.put('/:id', updateUserController.handle);
 
 module.exports = usersRoutes;

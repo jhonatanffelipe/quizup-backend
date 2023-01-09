@@ -1,3 +1,4 @@
+const AppError = require('../../../../shared/infra/http/errors/AppError');
 const CategoriesRepository = require('../../infra/knex/repositories/CategoriesRepository');
 
 class ListCategoryByIdUseCase {
@@ -7,7 +8,12 @@ class ListCategoryByIdUseCase {
 
   async execute(id) {
     const category = await this.categoriesRepository.findById(id);
-    category.image = `${process.env.BACKEND_APP_URL}/category/${category.image}`;
+
+    if (!category) {
+      throw new AppError('Categoria não encontrada.');
+    }
+
+    category.image = category.image && `${process.env.BACKEND_APP_URL}/category/${category.image}`;
     return category;
   }
 }
