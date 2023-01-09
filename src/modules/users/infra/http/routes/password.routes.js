@@ -8,6 +8,6 @@ const forgotPasswordController = new ForgotPasswordController();
 const resetPasswordController = new ResetPasswordController();
 
 passwordRoutes.post('/forgot', forgotPasswordController.handle);
-passwordRoutes.post('/reset', resetPasswordController.handle);
+passwordRoutes.put('/reset', resetPasswordController.handle);
 
 module.exports = passwordRoutes;
