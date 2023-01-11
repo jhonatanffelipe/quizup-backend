@@ -34,6 +34,15 @@ class UsersTokensRepository {
     }
   }
 
+  async findByUserIdAndRefreshToken({ userId, refreshToken }) {
+    try {
+      const userToken = await knex('usersTokens').where({ userId, refreshToken }).first();
+      return userToken;
+    } catch (error) {
+      throw new AppError('Erro ao encontrar token do usuário. Por favor contate a equipe de suporte.');
+    }
+  }
+
   async delete(id) {
     try {
       await knex('usersTokens').where({ id }).del();

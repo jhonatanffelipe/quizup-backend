@@ -33,15 +33,15 @@ class RefreshTokenUseCase {
 
     const { sub, email } = payload;
 
-    const userId = payload.sub;
+    const userId = sub;
 
-    const userToken = await this.usersTokensRepository.findByUserIdAndRefreshToken(userId, refreshToken);
+    const userToken = await this.usersTokensRepository.findByUserIdAndRefreshToken({ userId, refreshToken });
 
     if (!userToken) {
       throw new AppError('Refresh token does not exists!');
     }
 
-    await this.usersTokensRepository.deleteById(userToken.id);
+    await this.usersTokensRepository.delete(userToken.id);
 
     const accessToken = sign({ email }, secretAccessToken, {
       subject: sub,

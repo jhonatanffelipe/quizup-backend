@@ -2,6 +2,7 @@ const path = require('path');
 
 const AppError = require('../../../../shared/infra/http/errors/AppError');
 const EtherealMailProvider = require('../../../../shared/providers/MailProvider/EtherealMailProvider');
+const GoogleMailProvider = require('../../../../shared/providers/MailProvider/GoogleMailProvider');
 const UuidProvider = require('../../../../shared/providers/TokenProvider/UuidProvider');
 const ResetPasswordTokensRepository = require('../../infra/knex/repositories/ResetPasswordTokensRepository');
 const UsersRepository = require('../../infra/knex/repositories/UsersRepository');
@@ -11,7 +12,7 @@ class ForgotPasswordUseCase {
 
   constructor() {
     this.usersRepository = new UsersRepository();
-    this.mailProvider = this.provider === 'gmail' ? new EtherealMailProvider() : new EtherealMailProvider();
+    this.mailProvider = this.provider === 'gmail' ? new GoogleMailProvider() : new EtherealMailProvider();
     this.resetPasswordTokensRepository = new ResetPasswordTokensRepository();
     this.tokenProvider = new UuidProvider();
   }

@@ -24,7 +24,7 @@ categoriesRoutes.get('/', listCategoriesController.handle);
 categoriesRoutes.post('/', categoryController.handle);
 categoriesRoutes.put('/:id', updateCategoryController.handle);
 categoriesRoutes.delete('/:id', deleteCategoryController.handle);
-categoriesRoutes.patch('/image/:categoryId', uploadImage.single('image'), updateImageCategoryController.handle);
+categoriesRoutes.patch('/image/:id', uploadImage.single('image'), updateImageCategoryController.handle);
 categoriesRoutes.get('/:id', listCategoryByIdContoller.handle);
 
 module.exports = categoriesRoutes;
