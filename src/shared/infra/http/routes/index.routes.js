@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const categoriesRoutes = require('../../../../modules/questions/infra/http/routes/categories.routes');
+const topicsRoutes = require('../../../../modules/questions/infra/http/routes/topics.routes');
 
 const authenticateUserRoutes = require('../../../../modules/users/infra/http/routes/authenticate.routes');
 const passwordRoutes = require('../../../../modules/users/infra/http/routes/password.routes');
@@ -11,5 +12,6 @@ routes.use('/users', usersRoutes);
 routes.use('/auth', authenticateUserRoutes);
 routes.use('/password', passwordRoutes);
 routes.use('/categories', categoriesRoutes);
+routes.use('/topics', topicsRoutes);
 
 module.exports = routes;

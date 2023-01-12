@@ -1,5 +1,5 @@
 exports.up = knex =>
-  knex.schema.createTable('topcs', table => {
+  knex.schema.createTable('topics', table => {
     table.uuid('id').unique().primary().defaultTo(knex.raw('public.uuid_generate_v4()'));
     table.integer('sequence').unique();
     table.text('description').notNullable();
@@ -12,4 +12,4 @@ exports.up = knex =>
     table.foreign('categoryId').references('categories.id');
   });
 
-exports.down = knex => knex.schema.dropTable('topcs');
+exports.down = knex => knex.schema.dropTable('topics');
