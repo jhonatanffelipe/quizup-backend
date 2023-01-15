@@ -86,6 +86,14 @@ class TopicsRepository {
       throw new AppError('Erro ao atualizar tópico. Por favor contate a equipe de suporte.');
     }
   }
+
+  async delete(id) {
+    try {
+      await knex('topics').where({ id }).del();
+    } catch (error) {
+      throw new AppError('Erro ao atualizar tópico. Por favor contate a equipe de suporte.');
+    }
+  }
 }
 
 module.exports = TopicsRepository;

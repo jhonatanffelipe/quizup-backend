@@ -5,11 +5,11 @@ class UpdateTopicSequenceUseCase {
   currentSequence;
 
   constructor() {
-    this.topícsRepository = new TopicsRepository();
+    this.topicsRepository = new TopicsRepository();
   }
 
   async execute({ id, sequence }) {
-    const topic = await this.topícsRepository.findById(id);
+    const topic = await this.topicsRepository.findById(id);
 
     if (!topic) {
       throw new AppError('Tópico não encontrada', 400);
@@ -18,7 +18,7 @@ class UpdateTopicSequenceUseCase {
     if (sequence < topic.sequence) {
       this.currentSequence = sequence;
 
-      const nextTopics = await this.topícsRepository.findNextTopics({
+      const nextTopics = await this.topicsRepository.findNextTopics({
         sequence: this.currentSequence,
         categoryId: topic.categoryId,
       });
@@ -38,23 +38,23 @@ class UpdateTopicSequenceUseCase {
       this.currentSequence = sequence + 1;
 
       for await (const currentTopic of topicsToUpdate) {
-        await this.topícsRepository.update({ id: currentTopic.id, sequence: this.currentSequence });
+        await this.topicsRepository.update({ id: currentTopic.id, sequence: this.currentSequence });
         this.currentSequence += 1;
       }
     } else {
-      const topicsToUpdate = await this.topícsRepository.findBetween({
+      const topicsToUpdate = await this.topicsRepository.findBetween({
         initalSequence: topic.sequence,
         finalSequence: sequence,
       });
 
       this.currentSequence = topic.sequence;
       for await (const currentTopic of topicsToUpdate) {
-        await this.topícsRepository.update({ id: currentTopic.id, sequence: this.currentSequence });
+        await this.topicsRepository.update({ id: currentTopic.id, sequence: this.currentSequence });
         this.currentSequence += 1;
       }
     }
 
-    await this.topícsRepository.update({ id, sequence });
+    await this.topicsRepository.update({ id, sequence });
   }
 }
 
