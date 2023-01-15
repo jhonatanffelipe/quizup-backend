@@ -2,7 +2,7 @@ const AppError = require('../../../../shared/infra/http/errors/AppError');
 const LocalStorageProvider = require('../../../../shared/providers/StorageProvider/LocalStorageProvider');
 const CategoriesRepository = require('../../infra/knex/repositories/CategoriesRepository');
 
-class UpdateImageCategoryUseCase {
+class UpdateCategoryImageUseCase {
   constructor() {
     this.categoriesRepository = new CategoriesRepository();
     this.storageProvider = new LocalStorageProvider();
@@ -30,4 +30,4 @@ class UpdateImageCategoryUseCase {
   }
 }
 
-module.exports = UpdateImageCategoryUseCase;
+module.exports = UpdateCategoryImageUseCase;

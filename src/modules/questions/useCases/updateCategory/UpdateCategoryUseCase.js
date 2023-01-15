@@ -13,7 +13,7 @@ class UpdateCategoryUseCase {
       throw new AppError('Categoria não encontrada', 400);
     }
 
-    const descriptionAlreadExists = this.categoriesRepository.findByDescription(description);
+    const descriptionAlreadExists = await this.categoriesRepository.findByDescription(description);
 
     if (descriptionAlreadExists && descriptionAlreadExists.id !== id) {
       throw new AppError('Já existe uma categoria cadastrada com essa descrição', 400);

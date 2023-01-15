@@ -7,7 +7,7 @@ const DeleteCategoryController = require('../../../useCases/deleteCategory/Delet
 const ListCategoriesController = require('../../../useCases/listCategories/ListCategoriesContoller');
 const ListCategoryByIdContoller = require('../../../useCases/listCategoryById/ListCategoryByIdContoller');
 const UpdateCategoryController = require('../../../useCases/updateCategory/UpdateCategoryContoller');
-const UpdateImageCategoryController = require('../../../useCases/updateImageCategory/UpdateImageCategoryController');
+const UpdateCategoryImageController = require('../../../useCases/updateCategoryImage/UpdateCategoryImageController');
 
 const categoriesRoutes = Router();
 
@@ -17,7 +17,7 @@ const categoryController = new CreateCategoryController();
 const listCategoriesController = new ListCategoriesController();
 const updateCategoryController = new UpdateCategoryController();
 const deleteCategoryController = new DeleteCategoryController();
-const updateImageCategoryController = new UpdateImageCategoryController();
+const updateImageCategoryController = new UpdateCategoryImageController();
 const listCategoryByIdContoller = new ListCategoryByIdContoller();
 
 categoriesRoutes.get('/', listCategoriesController.handle);

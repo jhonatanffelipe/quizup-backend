@@ -1,11 +1,11 @@
-const UpdateImageCategoryUseCase = require('./UpdateImageCategoryUseCase');
+const UpdateCategoryImageUseCase = require('./UpdateCategoryImageUseCase');
 
-class UpdateImageCategoryController {
+class UpdateCategoryImageController {
   async handle(request, response) {
     const { id } = request.params;
     const imageFile = request.file?.filename || '';
 
-    const updateImageCategoryUseCase = new UpdateImageCategoryUseCase();
+    const updateImageCategoryUseCase = new UpdateCategoryImageUseCase();
 
     await updateImageCategoryUseCase.execute({ categoryId: id, imageFile });
 
@@ -13,4 +13,4 @@ class UpdateImageCategoryController {
   }
 }
 
-module.exports = UpdateImageCategoryController;
+module.exports = UpdateCategoryImageController;

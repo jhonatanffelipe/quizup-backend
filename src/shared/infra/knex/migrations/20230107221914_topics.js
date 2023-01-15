@@ -1,7 +1,7 @@
 exports.up = knex =>
   knex.schema.createTable('topics', table => {
     table.uuid('id').unique().primary().defaultTo(knex.raw('public.uuid_generate_v4()'));
-    table.integer('sequence').unique();
+    table.integer('sequence');
     table.text('description').notNullable();
     table.text('image');
     table.uuid('categoryId').notNullable();

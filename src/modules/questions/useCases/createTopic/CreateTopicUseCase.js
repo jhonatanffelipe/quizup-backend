@@ -28,12 +28,11 @@ class CreateTopicUseCase {
     }
 
     const previousTopic =
-      this.tokenProvider.validate(previousTopicId) &&
-      (await this.topicsRepository.findById({ id: previousTopicId, categoryId }));
+      this.tokenProvider.validate(previousTopicId) && (await this.topicsRepository.findById(previousTopicId));
 
     const currentSequence = previousTopic ? previousTopic.sequence + 1 : 1;
 
-    const nextTopics = await this.topicsRepository.findNextTopcs({ sequence: currentSequence, categoryId });
+    const nextTopics = await this.topicsRepository.findNextTopics({ sequence: currentSequence, categoryId });
 
     if (nextTopics.length > 0) {
       for await (const topic of nextTopics) {

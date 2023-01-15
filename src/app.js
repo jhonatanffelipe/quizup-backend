@@ -17,6 +17,7 @@ app.use(json({ limit: '50mb' }));
 
 app.use('/avatar', express.static(`${upload.tmpFolder}/avatar`));
 app.use('/category', express.static(`${upload.tmpFolder}/category`));
+app.use('/topic', express.static(`${upload.tmpFolder}/topic`));
 
 try {
   app.use(routes);

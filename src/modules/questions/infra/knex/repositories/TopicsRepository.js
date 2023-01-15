@@ -14,18 +14,18 @@ class TopicsRepository {
     }
   }
 
-  async find(categoryId) {
+  async findAllByCategoryId(categoryId) {
     try {
       const topics = await knex('topics').where({ categoryId }).orderBy('sequence', 'asc');
       return topics;
     } catch (error) {
-      throw new AppError('Erro ao buscar por tópico. Por favor contate a equipe de suporte.');
+      throw new AppError('Erro ao buscar por tópicos pela categoria informada. Por favor contate a equipe de suporte.');
     }
   }
 
-  async findById({ id, categoryId }) {
+  async findById(id) {
     try {
-      const topic = await knex('topics').where({ id, categoryId }).first();
+      const topic = await knex('topics').where({ id }).first();
       return topic;
     } catch (error) {
       throw new AppError('Erro ao buscar por tópico. Por favor contate a equipe de suporte.');
@@ -37,11 +37,11 @@ class TopicsRepository {
       const topic = await knex('topics').where({ description, categoryId }).first();
       return topic;
     } catch (error) {
-      throw new AppError('Erro ao buscar por tópico. Por favor contate a equipe de suporte.');
+      throw new AppError('Erro ao buscar por descrição do tópico. Por favor contate a equipe de suporte.');
     }
   }
 
-  async findNextTopcs({ sequence, categoryId }) {
+  async findNextTopics({ sequence, categoryId }) {
     try {
       const nextTopics = await knex('topics')
         .where({ categoryId })
@@ -49,7 +49,29 @@ class TopicsRepository {
         .orderBy('sequence', 'desc');
       return nextTopics;
     } catch (error) {
-      throw new AppError('Erro ao buscar por tópicos. Por favor contate a equipe de suporte.');
+      throw new AppError('Erro ao buscar próximos tópicos. Por favor contate a equipe de suporte.');
+    }
+  }
+
+  async findBySequence({ sequence, categoryId }) {
+    try {
+      const topic = await knex('topics').where({ sequence, categoryId }).first();
+      return topic;
+    } catch (error) {
+      throw new AppError('Erro ao buscar por tópico pela sequência. Por favor contate a equipe de suporte.');
+    }
+  }
+
+  async findBetween({ initalSequence, finalSequence }) {
+    try {
+      const topics = await knex('topics')
+        .where('sequence', '>', initalSequence)
+        .andWhere('sequence', '<=', finalSequence)
+        .orderBy('sequence', 'asc');
+
+      return topics;
+    } catch (error) {
+      throw new AppError('Erro ao buscar por tópicos do intervalo. Por favor contate a equipe de suporte.');
     }
   }
 
