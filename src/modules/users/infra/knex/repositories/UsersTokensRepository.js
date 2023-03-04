@@ -2,14 +2,12 @@ const knex = require('../../../../../config/db');
 const AppError = require('../../../../../shared/infra/http/errors/AppError');
 
 class UsersTokensRepository {
-  async create({ userId, accessToken, accessTokenExpiresDate, refreshToken, refreshTokenExpiresDate }) {
+  async create({ userId, accessToken, accessTokenExpiresDate }) {
     try {
       await knex('usersTokens').insert({
         userId,
         accessToken,
         accessTokenExpiresDate,
-        refreshToken,
-        refreshTokenExpiresDate,
       });
     } catch (error) {
       throw new AppError('Erro ao gerar token do usuário. Por favor contate a equipe de suporte.');
@@ -28,15 +26,6 @@ class UsersTokensRepository {
   async findByUserIdAndAccessToken({ userId, accessToken }) {
     try {
       const userToken = await knex('usersTokens').where({ userId, accessToken }).first();
-      return userToken;
-    } catch (error) {
-      throw new AppError('Erro ao encontrar token do usuário. Por favor contate a equipe de suporte.');
-    }
-  }
-
-  async findByUserIdAndRefreshToken({ userId, refreshToken }) {
-    try {
-      const userToken = await knex('usersTokens').where({ userId, refreshToken }).first();
       return userToken;
     } catch (error) {
       throw new AppError('Erro ao encontrar token do usuário. Por favor contate a equipe de suporte.');

@@ -4,8 +4,6 @@ exports.up = knex =>
     table.uuid('userId').notNullable();
     table.text('accessToken').notNullable();
     table.timestamp('accessTokenExpiresDate').notNullable();
-    table.text('refreshToken').notNullable();
-    table.timestamp('refreshTokenExpiresDate').notNullable();
 
     table.timestamp('createdAt').defaultTo(knex.fn.now());
     table.timestamp('updatedAt').defaultTo(knex.fn.now());

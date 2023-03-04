@@ -7,14 +7,7 @@ const BCryptProvider = require('../../../../shared/providers/HashProvider/BCrypt
 const UsersRepository = require('../../infra/knex/repositories/UsersRepository');
 const UsersTokensRepository = require('../../infra/knex/repositories/UsersTokensRepository');
 
-const {
-  secretAccessToken,
-  expiresInAccessToken,
-  expiresAccessTokenHours,
-  secretRefreshToken,
-  expiresInRefreshToken,
-  expiresRefreshTokenDays,
-} = auth;
+const { secretAccessToken, expiresInAccessToken, expiresAccessTokenHours } = auth;
 
 class AuthenticateUserUseCase {
   constructor() {
@@ -45,7 +38,7 @@ class AuthenticateUserUseCase {
     const expiredTokens = await this.usersTokensRopository.findByUserId(userId);
 
     for await (const userToken of expiredTokens) {
-      if (userToken.refreshTokenExpiresDate <= dateNow) {
+      if (userToken.accessTokenExpiresDate <= dateNow) {
         await this.usersTokensRopository.delete(userToken.id);
       }
     }
@@ -59,19 +52,10 @@ class AuthenticateUserUseCase {
 
     const accessTokenExpiresDate = dateProvider.addHours(expiresAccessTokenHours);
 
-    const refreshTokenExpiresDate = dateProvider.addDay(expiresRefreshTokenDays);
-
-    const refreshToken = sign({ email }, secretRefreshToken, {
-      subject: user.id,
-      expiresIn: expiresInRefreshToken,
-    });
-
     await this.usersTokensRopository.create({
       userId,
       accessToken,
       accessTokenExpiresDate,
-      refreshToken,
-      refreshTokenExpiresDate,
     });
 
     const tokenReturn = {
@@ -80,7 +64,6 @@ class AuthenticateUserUseCase {
         email: user.email,
       },
       accessToken,
-      refreshToken,
       iat,
       exp,
     };
