@@ -3,6 +3,7 @@ require('express-async-errors');
 
 const { json } = require('express');
 const express = require('express');
+const cors = require('cors');
 
 const upload = require('./config/upload');
 const AppError = require('./shared/infra/http/errors/AppError');
@@ -12,6 +13,8 @@ const routes = require('./shared/infra/http/routes/index.routes');
 dotenv.config();
 
 const app = express();
+
+app.use(cors());
 
 app.use(json({ limit: '50mb' }));
 
