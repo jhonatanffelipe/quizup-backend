@@ -62,6 +62,7 @@ class AuthenticateUserUseCase {
       user: {
         name: user.name,
         email: user.email,
+        avatar: (user.avatar = user.avatar && `${process.env.BACKEND_APP_URL}/avatar/${user.avatar}`),
         isAdmin: user.isAdmin,
       },
       accessToken,
