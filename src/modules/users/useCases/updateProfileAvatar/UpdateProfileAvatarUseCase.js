@@ -15,6 +15,10 @@ class UpdateProfileAvatarUseCase {
       throw new AppError('Token inválido!', 401);
     }
 
+    if (!avatarFile.includes('.jpg') && !avatarFile.includes('.png') && !avatarFile.includes('.jpeg')) {
+      throw new AppError('Tipo de arquivo inválido! Formatos aceitos (.jpeg .jpg .png)', 400);
+    }
+
     if (user.avatar) {
       await this.storageProvider.delete(user.avatar, 'avatar');
     }

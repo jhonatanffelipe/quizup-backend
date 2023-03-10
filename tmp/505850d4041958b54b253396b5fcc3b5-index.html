@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+
+    </head>
+
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        height: 100%;
+
+        background-color: #b9bece;
+
+        font-family: "Roboto", sans-serif;
+      }
+
+      h1 {
+        color: rgb(16, 16, 235);
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        font-size: 16px;
+
+        width: 300px;
+        height: 300px;
+        padding: 15px;
+
+        background: #fff;
+
+        position: relative;
+        border-radius: 6px;
+
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
+
+      button {
+        width: 150px;
+        height: 30px;
+        font-weight: bold;
+        color: #fff;
+
+        border: none;
+        border-radius: 6px;
+        background-color: rgb(16, 16, 235);
+        cursor: pointer;
+
+        transition: background-color 0.5s;
+
+        margin-top: 15px;
+
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+      }
+
+      button:hover {
+        background-color: rgb(75, 75, 226);
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .input-group > input {
+        height: 20px;
+        padding: 4px 8px;
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Consulta de CEP</h1>
+    </header>
+
+    <section>
+      <div class="alert alert-danger" role="alert">
+        A simple danger alert—check it out!
+      </div>
+      <form>
+        <div class="input-group">
+          <label for="">CEP: </label>
+          <input
+            type="text"
+            id="input-cep"
+            maxlength="8"
+            onkeypress="return onlynumber()"
+          />
+        </div>
+        <div class="input-group">
+          <label for="">Estado: </label>
+          <input
+            type="text"
+            id="input-estado"
+            maxlength="8"
+            onkeypress="return onlynumber()"
+          />
+        </div>
+        <div class="input-group">
+          <label for="">Cidade: </label>
+          <input
+            type="text"
+            id="input-cidade"
+            maxlength="8"
+            onkeypress="return onlynumber()"
+          />
+        </div>
+        <div class="input-group">
+          <label for="">Bairro: </label>
+          <input
+            type="text"
+            id="input-bairro"
+            maxlength="8"
+            onkeypress="return onlynumber()"
+          />
+        </div>
+        <button type="submit" id="button-submit">Enviar</button>
+      </form>
+    </section>
+    <footer></footer>
+    
+    <script>
+      const onlynumber = (e) => {
+        const event = e || window.event;
+        let key = event.keyCode || event.which;
+        key = String.fromCharCode(key);
+
+        const regex = /^[0-9.]+$/;
+        if (!regex.test(key)) {
+          event.returnValue = false;
+          if (event.preventDefault) {
+            event.preventDefault();
+          }
+        }
+      };
+
+      const handleZipCodeQuery = (e) => {
+        e.preventDefault();
+        document.getElementById("input-estado").value = "";
+        document.getElementById("input-cidade").value = "";
+        document.getElementById("input-bairro").value = "";
+
+        const cep = document.getElementById("input-cep").value;
+
+        if (cep.length < 8) {
+          window.alert("CEP inválido");
+          return;
+        }
+
+        const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("input-estado").value = data.uf;
+            document.getElementById("input-cidade").value = data.localidade;
+            document.getElementById("input-bairro").value = data.bairro;
+          })
+          .catch((error) => {
+            window.alert("CEP não encontrado");
+          });
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+      };
+
+      document.getElementById("input-cep").addEventListener("focusout", (e) => {
+        handleZipCodeQuery(e);
+      });
+
+      document
+        .getElementById("button-submit")
+        .addEventListener("click", (e) => {
+          handleSubmit(e);
+        });
+    </script>
+  </body>
+</html>
