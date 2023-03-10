@@ -2,18 +2,28 @@ const { hashSync } = require('bcryptjs');
 const AppError = require('../../../../shared/infra/http/errors/AppError');
 const UsersRepository = require('../../infra/knex/repositories/UsersRepository');
 const UsersTokensRepository = require('../../infra/knex/repositories/UsersTokensRepository');
+const HashProvider = require('../../../../shared/providers/HashProvider/BCryptProvider');
 
 class UpdateProfileUseCase {
   constructor() {
     this.usersRepository = new UsersRepository();
     this.usersTokensRepository = new UsersTokensRepository();
+    this.hashProvider = new HashProvider();
   }
 
-  async execute({ id, name, email, password, confirmPassword }) {
+  async execute({ id, name, email, currentPassword, password, confirmPassword }) {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new AppError('Usuário não encontrado.');
+    }
+
+    if (currentPassword || password || confirmPassword) {
+      const passwordMatch = await this.hashProvider.comparePasswords(currentPassword, user.password);
+
+      if (!passwordMatch) {
+        throw new AppError('Senha atual incorreta!');
+      }
     }
 
     if (password) {
@@ -36,7 +46,6 @@ class UpdateProfileUseCase {
 
       // await this.usersTokensRepository.deleteByUserId(id);
     } else {
-      console.log(id, name, email);
       await this.usersRepository.update({ id, name, email });
     }
   }

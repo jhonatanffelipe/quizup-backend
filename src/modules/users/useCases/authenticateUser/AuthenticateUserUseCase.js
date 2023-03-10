@@ -22,7 +22,7 @@ class AuthenticateUserUseCase {
     const user = await this.usersRopository.findByEmail(email);
 
     if (!user) {
-      throw new AppError('Email or password incorrect!');
+      throw new AppError('Email ou senha incorretos!');
     }
 
     const userId = user.id ? user.id : '';
@@ -30,7 +30,7 @@ class AuthenticateUserUseCase {
     const passwordMatch = await this.hashProvider.comparePasswords(password, user.password);
 
     if (!passwordMatch) {
-      throw new AppError('Email or password incorrect!');
+      throw new AppError('Email ou senha incorretos!');
     }
 
     const dateNow = dateProvider.dateNow();
