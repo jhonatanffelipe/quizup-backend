@@ -42,10 +42,11 @@ class UsersRepository {
     }
   }
 
-  async update({ id, name, password, avatar, isActive, isAdmin }) {
+  async update({ id, name, email, password, avatar, isActive, isAdmin }) {
     try {
       await knex('users').where({ id }).update({
         name,
+        email,
         avatar,
         password,
         isActive,

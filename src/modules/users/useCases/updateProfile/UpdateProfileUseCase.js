@@ -9,7 +9,7 @@ class UpdateProfileUseCase {
     this.usersTokensRepository = new UsersTokensRepository();
   }
 
-  async execute({ id, name, password, confirmPassword }) {
+  async execute({ id, name, email, password, confirmPassword }) {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
@@ -32,11 +32,12 @@ class UpdateProfileUseCase {
 
       const passwordHash = hashSync(password, 8);
 
-      await this.usersRepository.update({ id, name, password: passwordHash });
+      await this.usersRepository.update({ id, name, email, password: passwordHash });
 
-      await this.usersTokensRepository.deleteByUserId(id);
+      // await this.usersTokensRepository.deleteByUserId(id);
     } else {
-      await this.usersRepository.update({ id, name });
+      console.log(id, name, email);
+      await this.usersRepository.update({ id, name, email });
     }
   }
 }
