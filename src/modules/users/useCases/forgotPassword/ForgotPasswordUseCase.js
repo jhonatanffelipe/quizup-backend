@@ -41,7 +41,7 @@ class ForgotPasswordUseCase {
         name: user.name,
         email: user.email,
       },
-      subject: '[Turtle Quiz] Recuperação de senha',
+      subject: '[QuizEdu] Recuperação de senha',
       templateData: {
         file: forgotPasswordTemplate,
         variables: {

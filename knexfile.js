@@ -1,7 +1,7 @@
 module.exports = {
   client: 'pg',
   connection: {
-    database: 'turtle-quiz-db',
+    database: 'quizedu-db',
     user: 'postgres',
     password: '123456',
   },
