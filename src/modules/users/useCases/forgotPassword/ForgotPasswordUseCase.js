@@ -46,7 +46,7 @@ class ForgotPasswordUseCase {
         file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          link: `${process.env.FRONTEND_APP_URL}/reset_password?token=${token}`,
+          link: `${process.env.FRONTEND_APP_URL}/reset-password?token=${token}`,
         },
       },
     });
