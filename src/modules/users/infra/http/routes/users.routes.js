@@ -11,6 +11,7 @@ const ShowProfileController = require('../../../useCases/showProfile/ShowProfile
 const UpdateProfileController = require('../../../useCases/updateProfile/UpdateProfileController');
 const UpdateProfileAvatarController = require('../../../useCases/updateProfileAvatar/UpdateProfileAvatarController');
 const UpdateUserController = require('../../../useCases/updateUser/UpdateUserController');
+const DeleteUserController = require('../../../useCases/deleteUser/DeleteUserController');
 const ensureAdmin = require('../middlewares/ensureAdmin');
 
 const usersRoutes = Router();
@@ -21,6 +22,7 @@ const createUserController = new CreateUserController();
 const listUsersController = new ListUsersController();
 const listUserByIdController = new ListUserByIdController();
 const updateUserController = new UpdateUserController();
+const deleteUserController = new DeleteUserController();
 const updateProfileController = new UpdateProfileController();
 const showProfileController = new ShowProfileController();
 const updateProfileAvatarController = new UpdateProfileAvatarController();
@@ -36,5 +38,6 @@ usersRoutes.patch('/avatar', uploadAvatar.single('avatar'), updateProfileAvatarC
 usersRoutes.use(ensureAdmin);
 usersRoutes.get('/:id', listUserByIdController.handle);
 usersRoutes.put('/:id', updateUserController.handle);
+usersRoutes.delete('/:id', deleteUserController.handle);
 
 module.exports = usersRoutes;

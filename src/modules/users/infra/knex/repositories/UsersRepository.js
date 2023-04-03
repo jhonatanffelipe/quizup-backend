@@ -61,6 +61,14 @@ class UsersRepository {
       throw new AppError('Erro ao atualizar usuário. Por favor contate a equipe de suporte.');
     }
   }
+
+  async delete(id) {
+    try {
+      await knex('users').where({ id }).del();
+    } catch (error) {
+      throw new AppError('Erro ao deletar usuário. Por favor contate a equipe de suporte.');
+    }
+  }
 }
 
 module.exports = UsersRepository;
