@@ -15,10 +15,15 @@ class UsersRepository {
     }
   }
 
-  async find() {
+  async find({ page, perPage }) {
     try {
-      const users = await knex('users').orderBy('name');
-      return users;
+      const users = await knex('users')
+        .limit(perPage)
+        .offset((page - 1) * perPage)
+        .orderBy('name');
+
+      const count = await knex('users').count();
+      return { users, count: count[0]?.count > 0 ? Number(count[0].count) : 0 };
     } catch (error) {
       throw new AppError('Erro ao listar usuários. Por favor contate a equipe de suporte.');
     }
