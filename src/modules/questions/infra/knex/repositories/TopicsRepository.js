@@ -81,6 +81,7 @@ class TopicsRepository {
         sequence,
         description,
         image,
+        updatedAt: new Date(),
       });
     } catch (error) {
       throw new AppError('Erro ao atualizar tópico. Por favor contate a equipe de suporte.');

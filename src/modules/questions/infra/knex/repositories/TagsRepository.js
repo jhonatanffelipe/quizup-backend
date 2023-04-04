@@ -39,7 +39,7 @@ class TagsRepository {
 
   async update({ id, description }) {
     try {
-      await knex('tags').where({ id }).update({ description });
+      await knex('tags').where({ id }).update({ description, updatedAt: new Date() });
     } catch (error) {
       throw new AppError('Erro ao atualizar tag. Por favor contate a equipe de suporte.');
     }

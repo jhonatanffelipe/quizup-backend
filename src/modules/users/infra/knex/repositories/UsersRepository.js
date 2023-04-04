@@ -56,6 +56,7 @@ class UsersRepository {
         password,
         isActive,
         isAdmin,
+        updatedAt: new Date(),
       });
     } catch (error) {
       throw new AppError('Erro ao atualizar usuário. Por favor contate a equipe de suporte.');

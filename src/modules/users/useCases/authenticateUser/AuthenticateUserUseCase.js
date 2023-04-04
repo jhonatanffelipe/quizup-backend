@@ -25,6 +25,10 @@ class AuthenticateUserUseCase {
       throw new AppError('Email ou senha incorretos!');
     }
 
+    if (!user?.isActive) {
+      throw new AppError('Usuário não está ativo!', 401);
+    }
+
     const userId = user.id ? user.id : '';
 
     const passwordMatch = await this.hashProvider.comparePasswords(password, user.password);

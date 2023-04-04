@@ -39,7 +39,7 @@ class CategoriesRepository {
 
   async update({ id, description, image }) {
     try {
-      await knex('categories').where({ id }).update({ description, image });
+      await knex('categories').where({ id }).update({ description, image, updatedAt: new Date() });
     } catch (error) {
       throw new AppError('Erro ao atualizar categoria. Por favor contate a equipe de suporte.');
     }
