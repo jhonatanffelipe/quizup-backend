@@ -6,8 +6,7 @@ exports.up = knex =>
     table.text('image');
     table.uuid('categoryId').notNullable();
 
-    table.timestamp('createdAt').defaultTo(knex.fn.now());
-    table.timestamp('updatedAt').defaultTo(knex.fn.now());
+    table.timestamps(true, true, true);
 
     table.foreign('categoryId').references('categories.id');
   });

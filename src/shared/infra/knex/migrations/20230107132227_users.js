@@ -8,8 +8,7 @@ exports.up = knex =>
     table.boolean('isActive').defaultTo(true);
     table.boolean('isAdmin').defaultTo(false);
 
-    table.timestamp('createdAt').defaultTo(knex.fn.now());
-    table.timestamp('updatedAt').defaultTo(knex.fn.now());
+    table.timestamps(true, true, true);
   });
 
 exports.down = knex => knex.schema.dropTable('users');

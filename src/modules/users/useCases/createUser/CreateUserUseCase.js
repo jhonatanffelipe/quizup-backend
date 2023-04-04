@@ -8,7 +8,7 @@ class CreateUserUseCase {
   }
 
   async execute(name, email, password, confirmPassword, isAdmin) {
-    const user = await this.usersRepository.findByEmail(email);
+    const user = await this.usersRepository.findByEmail(email.toLowerCase());
 
     if (user) {
       throw new AppError('Já existe um usuário criado com esse e-mail.');
@@ -31,7 +31,7 @@ class CreateUserUseCase {
 
     await this.usersRepository.create({
       name,
-      email,
+      email: email.toLowerCase(),
       password: passwordHash,
       isAdmin,
     });

@@ -4,8 +4,7 @@ exports.up = knex =>
     table.uuid('userId').notNullable();
     table.text('token').notNullable();
 
-    table.timestamp('createdAt').defaultTo(knex.fn.now());
-    table.timestamp('updatedAt').defaultTo(knex.fn.now());
+    table.timestamps(true, true, true);
 
     table.foreign('userId').references('users.id');
   });

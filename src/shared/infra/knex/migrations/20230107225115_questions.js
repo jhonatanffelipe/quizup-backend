@@ -6,8 +6,7 @@ exports.up = knex =>
     table.uuid('topicId').notNullable();
     table.uuid('userId').notNullable();
 
-    table.timestamp('createdAt').defaultTo(knex.fn.now());
-    table.timestamp('updatedAt').defaultTo(knex.fn.now());
+    table.timestamps(true, true, true);
 
     table.foreign('topicId').references('topics.id');
     table.foreign('userId').references('users.id');

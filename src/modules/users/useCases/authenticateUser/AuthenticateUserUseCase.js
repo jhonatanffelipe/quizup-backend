@@ -19,7 +19,7 @@ class AuthenticateUserUseCase {
   async execute({ email, password }) {
     const dateProvider = new MomentDateProvider();
 
-    const user = await this.usersRopository.findByEmail(email);
+    const user = await this.usersRopository.findByEmail(email.toLowerCase());
 
     if (!user) {
       throw new AppError('Email ou senha incorretos!');

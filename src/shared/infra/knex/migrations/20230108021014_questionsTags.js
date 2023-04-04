@@ -4,8 +4,7 @@ exports.up = knex =>
     table.uuid('questionId');
     table.uuid('tagsId');
 
-    table.timestamp('createdAt').defaultTo(knex.fn.now());
-    table.timestamp('updatedAt').defaultTo(knex.fn.now());
+    table.timestamps(true, true, true);
 
     table.foreign('questionId').references('questions.id');
     table.foreign('tagsId').references('tags.id');

@@ -42,11 +42,9 @@ class UpdateProfileUseCase {
 
       const passwordHash = hashSync(password, 8);
 
-      await this.usersRepository.update({ id, name, email, password: passwordHash });
-
-      // await this.usersTokensRepository.deleteByUserId(id);
+      await this.usersRepository.update({ id, name, email: email.toLowerCase(), password: passwordHash });
     } else {
-      await this.usersRepository.update({ id, name, email });
+      await this.usersRepository.update({ id, name, email: email.toLowerCase() });
     }
   }
 }

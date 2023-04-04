@@ -5,8 +5,7 @@ exports.up = knex =>
     table.text('accessToken').notNullable();
     table.timestamp('accessTokenExpiresDate').notNullable();
 
-    table.timestamp('createdAt').defaultTo(knex.fn.now());
-    table.timestamp('updatedAt').defaultTo(knex.fn.now());
+    table.timestamps(true, true, true);
 
     table.foreign('userId').references('users.id');
   });

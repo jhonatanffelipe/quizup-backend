@@ -4,8 +4,7 @@ exports.up = knex =>
     table.text('description').notNullable().unique();
     table.text('image');
 
-    table.timestamp('createdAt').defaultTo(knex.fn.now());
-    table.timestamp('updatedAt').defaultTo(knex.fn.now());
+    table.timestamps(true, true, true);
   });
 
 exports.down = knex => knex.schema.dropTable('categories');

@@ -8,14 +8,14 @@ class UpdateUserUseCase {
     this.usersTokensRepository = new UsersTokensRepository();
   }
 
-  async execute({ id, name, isActive, isAdmin }) {
+  async execute({ id, name, email, isActive, isAdmin }) {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new AppError('Usuário não encontrado.');
     }
 
-    await this.usersRepository.update({ id, name, isActive, isAdmin });
+    await this.usersRepository.update({ id, name, email, isActive, isAdmin });
   }
 }
 
