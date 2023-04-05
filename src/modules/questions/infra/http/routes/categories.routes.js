@@ -2,6 +2,7 @@ const { Router } = require('express');
 const multer = require('multer');
 
 const uploadConfig = require('../../../../../config/upload');
+const ensureAuthenticated = require('../../../../users/infra/http/middlewares/esureAuthenticated');
 const CreateCategoryController = require('../../../useCases/createCategory/CreateCategoryContoller');
 const DeleteCategoryController = require('../../../useCases/deleteCategory/DeleteCategoryContoller');
 const ListCategoriesController = require('../../../useCases/listCategories/ListCategoriesContoller');
@@ -20,6 +21,7 @@ const deleteCategoryController = new DeleteCategoryController();
 const updateImageCategoryController = new UpdateCategoryImageController();
 const listCategoryByIdContoller = new ListCategoryByIdContoller();
 
+categoriesRoutes.use(ensureAuthenticated);
 categoriesRoutes.get('/', listCategoriesController.handle);
 categoriesRoutes.post('/', categoryController.handle);
 categoriesRoutes.put('/:id', updateCategoryController.handle);
