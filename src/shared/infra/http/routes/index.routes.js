@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const categoriesRoutes = require('../../../../modules/questions/infra/http/routes/categories.routes');
 const tagsRoutes = require('../../../../modules/questions/infra/http/routes/tags.routes');
-const topicsRoutes = require('../../../../modules/questions/infra/http/routes/topics.routes');
+const subjectRoutes = require('../../../../modules/questions/infra/http/routes/subjects.routes');
 
 const authenticateUserRoutes = require('../../../../modules/users/infra/http/routes/authenticate.routes');
 const passwordRoutes = require('../../../../modules/users/infra/http/routes/password.routes');
@@ -13,7 +13,7 @@ routes.use('/users', usersRoutes);
 routes.use('/auth', authenticateUserRoutes);
 routes.use('/password', passwordRoutes);
 routes.use('/categories', categoriesRoutes);
-routes.use('/topics', topicsRoutes);
+routes.use('/subjects', subjectRoutes);
 routes.use('/tags', tagsRoutes);
 
 module.exports = routes;

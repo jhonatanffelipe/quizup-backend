@@ -6,9 +6,9 @@ class ListTagsContoller {
 
     const { categoryId } = request.params;
 
-    const topics = await listTagsUseCase.execute(categoryId);
+    const subjects = await listTagsUseCase.execute(categoryId);
 
-    return response.status(200).json(topics);
+    return response.status(200).json(subjects);
   }
 }
 
