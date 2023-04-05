@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="450px" src="https://raw.githubusercontent.com/jhonatanffelipe/quizup-backend/main/src/assets/logoWhite.png?token=GHSAT0AAAAAACBAMZAYMVWVPVWLUT5E3G7KZBNRH7A" />
+  <img width="450px" src="https://raw.githubusercontent.com/jhonatanffelipe/quizup-backend/main/src/assets/logoWhite.png" />
   <br/>
   <br/>
 </div>
