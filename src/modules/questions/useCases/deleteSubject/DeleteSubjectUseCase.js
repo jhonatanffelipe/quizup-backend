@@ -23,7 +23,7 @@ class DeleteSubjectUseCase {
     });
 
     const subjectToUpdate = nextSubjects
-      .filter(topc => topc.id !== id)
+      .filter(subject => subject.id !== id)
       .sort((a, b) => {
         if (a.sequence > b.sequence) {
           return 1;
