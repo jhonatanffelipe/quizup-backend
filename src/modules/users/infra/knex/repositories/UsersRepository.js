@@ -67,7 +67,7 @@ class UsersRepository {
     try {
       await knex('users').where({ id }).del();
     } catch (error) {
-      throw new AppError('Erro ao deletar usuário. Por favor contate a equipe de suporte.');
+      throw new AppError('Usuário não pode ser deletado. Por favor inative o usuário.');
     }
   }
 }
