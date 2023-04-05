@@ -27,8 +27,8 @@ class GoogleMailProvider {
   async sendMail({ to, from, templateData, subject }) {
     await this.client.sendMail({
       from: {
-        name: from?.name || 'Equipe QuizEdu',
-        address: from?.email || 'equipe@quizedu.com.br',
+        name: from?.name || 'Equipe QuizUp',
+        address: from?.email || 'equipe@quizup.com.br',
       },
       to: {
         name: to.name,

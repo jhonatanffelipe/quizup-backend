@@ -27,8 +27,8 @@ class EtherealMailProvider {
 
     const message = await this.client.sendMail({
       from: {
-        name: from?.name || 'Equipe QuizEdu',
-        address: from?.email || 'equipe@quizedu.com',
+        name: from?.name || 'Equipe QuizUp',
+        address: from?.email || 'equipe@quizup.com',
       },
       to: {
         name: to.name,
