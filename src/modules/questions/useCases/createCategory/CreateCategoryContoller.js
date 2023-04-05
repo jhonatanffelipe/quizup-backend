@@ -4,9 +4,9 @@ class CreateCategoryController {
   async handle(request, response) {
     const createCategoryUseCase = new CreateCategoryUseCase();
 
-    const { description } = request.body;
+    const { description, isActive } = request.body;
 
-    await createCategoryUseCase.execute(description);
+    await createCategoryUseCase.execute({ description, isActive });
 
     return response.status(201).send();
   }

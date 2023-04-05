@@ -5,6 +5,7 @@ exports.up = knex =>
     table.text('info').notNullable();
     table.uuid('subjectId').notNullable();
     table.uuid('userId').notNullable();
+    table.boolean('isActive').defaultTo(true);
 
     table.timestamps(true, true, true);
 

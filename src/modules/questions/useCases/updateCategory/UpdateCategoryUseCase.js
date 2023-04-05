@@ -6,7 +6,7 @@ class UpdateCategoryUseCase {
     this.categoriesRepository = new CategoriesRepository();
   }
 
-  async execute({ id, description }) {
+  async execute({ id, description, isActive }) {
     const categoryAlreadExists = await this.categoriesRepository.findById(id);
 
     if (!categoryAlreadExists) {
@@ -19,7 +19,7 @@ class UpdateCategoryUseCase {
       throw new AppError('Já existe uma categoria cadastrada com essa descrição', 400);
     }
 
-    await this.categoriesRepository.update({ id, description });
+    await this.categoriesRepository.update({ id, description, isActive });
   }
 }
 

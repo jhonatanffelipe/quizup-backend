@@ -2,9 +2,9 @@ const knex = require('../../../../../config/db');
 const AppError = require('../../../../../shared/infra/http/errors/AppError');
 
 class CategoriesRepository {
-  async create({ description }) {
+  async create({ description, isActive }) {
     try {
-      await knex('categories').insert({ description });
+      await knex('categories').insert({ description, isActive });
     } catch (error) {
       throw new AppError('Erro ao criar categoria. Por favor contate a equipe de suporte.');
     }
@@ -42,9 +42,9 @@ class CategoriesRepository {
     }
   }
 
-  async update({ id, description, image }) {
+  async update({ id, description, image, isActive }) {
     try {
-      await knex('categories').where({ id }).update({ description, image, updatedAt: new Date() });
+      await knex('categories').where({ id }).update({ description, image, isActive, updatedAt: new Date() });
     } catch (error) {
       throw new AppError('Erro ao atualizar categoria. Por favor contate a equipe de suporte.');
     }

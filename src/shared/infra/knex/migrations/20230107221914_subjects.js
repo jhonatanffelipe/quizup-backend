@@ -5,6 +5,7 @@ exports.up = knex =>
     table.text('description').notNullable();
     table.text('image');
     table.uuid('categoryId').notNullable();
+    table.boolean('isActive').defaultTo(true);
 
     table.timestamps(true, true, true);
 
