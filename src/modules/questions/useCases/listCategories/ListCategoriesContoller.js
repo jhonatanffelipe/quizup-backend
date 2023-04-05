@@ -2,11 +2,13 @@ const ListCategoriesUseCase = require('./ListCategoriesUseCase');
 
 class ListCategoriesController {
   async handle(request, response) {
+    const { page, perPage } = request.query;
+
     const listCategoriesUseCase = new ListCategoriesUseCase();
 
-    const categories = await listCategoriesUseCase.execute();
+    const categories = await listCategoriesUseCase.execute({ page: Number(page), perPage: Number(perPage) });
 
-    return response.status(200).json(categories);
+    return response.json(categories);
   }
 }
 

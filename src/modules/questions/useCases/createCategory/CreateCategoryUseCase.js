@@ -13,7 +13,7 @@ class CreateCategoryUseCase {
       throw new AppError('Já existe uma categoria cadastrada com essa descrição');
     }
 
-    await this.categoriesRepository.create(description);
+    await this.categoriesRepository.create({ description });
   }
 }
 

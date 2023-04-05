@@ -10,10 +10,15 @@ class CategoriesRepository {
     }
   }
 
-  async find() {
+  async find({ page, perPage }) {
     try {
-      const categories = await knex('categories').orderBy('description');
-      return categories;
+      const categories = await knex('categories')
+        .orderBy('description')
+        .limit(perPage)
+        .offset((page - 1) * perPage);
+
+      const count = await knex('categories').count();
+      return { categories, count: count[0]?.count > 0 ? Number(count[0].count) : 0 };
     } catch (error) {
       throw new AppError('Erro ao buscar por categorias. Por favor contate a equipe de suporte.');
     }

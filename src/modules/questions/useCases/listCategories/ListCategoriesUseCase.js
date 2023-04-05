@@ -5,12 +5,25 @@ class ListCategoriesUseCase {
     this.categoriesRepository = new CategoriesRepository();
   }
 
-  async execute() {
-    const categories = await this.categoriesRepository.find();
-    return categories.map(category => {
-      category.image = category.image && `${process.env.BACKEND_APP_URL}/category/${category.image}`;
-      return category;
-    });
+  async execute({ page, perPage }) {
+    if (!page || page <= 0) {
+      page = 1;
+    }
+
+    if (!perPage || perPage <= 0) {
+      perPage = 5;
+    }
+
+    const data = await this.categoriesRepository.find({ page, perPage });
+
+    const response = {
+      perPage,
+      currentPage: page,
+      totalRows: data.count,
+      data: data.categories,
+    };
+
+    return response;
   }
 }
 
