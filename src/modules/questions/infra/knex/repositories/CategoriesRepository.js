@@ -10,14 +10,15 @@ class CategoriesRepository {
     }
   }
 
-  async find({ page, perPage }) {
+  async find({ page, perPage, description }) {
     try {
       const categories = await knex('categories')
+        .whereILike('description', `%${description}%`)
         .orderBy('description')
         .limit(perPage)
         .offset((page - 1) * perPage);
 
-      const count = await knex('categories').count();
+      const count = await knex('categories').whereILike('description', `%${description}%`).count();
       return { categories, count: count[0]?.count > 0 ? Number(count[0].count) : 0 };
     } catch (error) {
       throw new AppError('Erro ao buscar por categorias. Por favor contate a equipe de suporte.');

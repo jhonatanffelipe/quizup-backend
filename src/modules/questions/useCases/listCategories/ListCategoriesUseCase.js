@@ -5,7 +5,7 @@ class ListCategoriesUseCase {
     this.categoriesRepository = new CategoriesRepository();
   }
 
-  async execute({ page, perPage }) {
+  async execute({ page, perPage, description }) {
     if (!page || page <= 0) {
       page = 1;
     }
@@ -14,7 +14,7 @@ class ListCategoriesUseCase {
       perPage = 5;
     }
 
-    const data = await this.categoriesRepository.find({ page, perPage });
+    const data = await this.categoriesRepository.find({ page, perPage, description });
 
     const response = {
       perPage,
