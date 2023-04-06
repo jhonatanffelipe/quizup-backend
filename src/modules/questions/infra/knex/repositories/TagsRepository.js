@@ -10,10 +10,15 @@ class TagsRepository {
     }
   }
 
-  async find() {
+  async find({ page, perPage }) {
     try {
-      const tags = await knex('tags').orderBy('description');
-      return tags;
+      const tags = await knex('tags')
+        .orderBy('description')
+        .limit(perPage)
+        .offset((page - 1) * perPage);
+
+      const count = await knex('tags').count();
+      return { tags, count: count[0]?.count > 0 ? Number(count[0].count) : 0 };
     } catch (error) {
       throw new AppError('Erro ao buscar por tags. Por favor contate a equipe de suporte.');
     }
@@ -37,9 +42,9 @@ class TagsRepository {
     }
   }
 
-  async update({ id, description }) {
+  async update({ id, description, isActive }) {
     try {
-      await knex('tags').where({ id }).update({ description, updatedAt: new Date() });
+      await knex('tags').where({ id }).update({ description, isActive, updatedAt: new Date() });
     } catch (error) {
       throw new AppError('Erro ao atualizar tag. Por favor contate a equipe de suporte.');
     }

@@ -14,14 +14,18 @@ class SubjectsRepository {
     }
   }
 
-  async findAllByCategoryId(categoryId) {
+  async findAllByCategoryId({ page, perPage, categoryId }) {
     try {
-      const subjects = await knex('subjects').where({ categoryId }).orderBy('sequence', 'asc');
-      return subjects;
+      const subjects = await knex('subjects')
+        .where({ categoryId })
+        .orderBy('sequence', 'asc')
+        .limit(perPage)
+        .offset((page - 1) * perPage);
+
+      const count = await knex('subjects').count();
+      return { subjects, count: count[0]?.count > 0 ? Number(count[0].count) : 0 };
     } catch (error) {
-      throw new AppError(
-        'Erro ao buscar por assuntos pela categoria informada. Por favor contate a equipe de suporte.',
-      );
+      throw new AppError('Erro ao buscar por assunto. Por favor contate a equipe de suporte.');
     }
   }
 
