@@ -7,7 +7,7 @@ class CreateUserUseCase {
     this.usersRepository = new UsersRepository();
   }
 
-  async execute(name, email, password, confirmPassword, isAdmin) {
+  async execute(name, email, password, confirmPassword, isActive, isAdmin) {
     const user = await this.usersRepository.findByEmail(email.toLowerCase());
 
     if (user) {
@@ -33,6 +33,7 @@ class CreateUserUseCase {
       name,
       email: email.toLowerCase(),
       password: passwordHash,
+      isActive,
       isAdmin,
     });
   }

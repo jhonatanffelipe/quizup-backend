@@ -2,13 +2,14 @@ const knex = require('../../../../../config/db');
 const AppError = require('../../../../../shared/infra/http/errors/AppError');
 
 class UsersRepository {
-  async create({ name, email, password, isAdmin }) {
+  async create({ name, email, password, isAdmin, isActive }) {
     try {
       await knex('users').insert({
         name,
         email,
         password,
         isAdmin,
+        isActive,
       });
     } catch (error) {
       throw new AppError('Erro ao criar usuário. Por favor contate a equipe de suporte.');
