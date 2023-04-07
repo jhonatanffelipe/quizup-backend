@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 const HandlebarsMailTemplateProvider = require('../MailTemplateProvider/HandlebarsMailTemplateProvider');
 
-class GoogleMailProvider {
+class EmailProvider {
   client;
 
   pass = process.env.GMAIL_PASSWORD;
@@ -40,4 +40,4 @@ class GoogleMailProvider {
   }
 }
 
-module.exports = GoogleMailProvider;
+module.exports = EmailProvider;
