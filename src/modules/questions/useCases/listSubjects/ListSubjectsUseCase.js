@@ -8,12 +8,12 @@ class ListSubjectsUseCase {
     this.uuidProvider = new UuidProvider();
   }
 
-  async execute({ page, perPage, categoryId }) {
+  async execute({ categoryId, page, perPage, description }) {
     if (!this.uuidProvider.validate(categoryId)) {
       throw new AppError('Categoria inválida.');
     }
 
-    const response = await this.subjectsRepository.findAllByCategoryId({ page, perPage, categoryId });
+    const response = await this.subjectsRepository.findAllByCategoryId({ categoryId, page, perPage, description });
 
     response.data = response.data.map(subject => {
       subject.image = subject.image && `${process.env.BACKEND_APP_URL}/subject/${subject.image}`;

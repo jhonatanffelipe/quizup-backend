@@ -14,7 +14,7 @@ class SubjectsRepository {
     }
   }
 
-  async findAllByCategoryId({ page, perPage, categoryId }) {
+  async findAllByCategoryId({ categoryId, page, perPage, description }) {
     if (!page || page <= 0) {
       page = 1;
     }
@@ -26,11 +26,12 @@ class SubjectsRepository {
     try {
       const subjects = await knex('subjects')
         .where({ categoryId })
+        .whereILike('description', `%${description}%`)
         .orderBy('sequence', 'asc')
         .limit(perPage)
         .offset((page - 1) * perPage);
 
-      const count = await knex('subjects').where({ categoryId }).count();
+      const count = await knex('subjects').where({ categoryId }).whereILike('description', `%${description}%`).count();
 
       const response = {
         perPage: Number(perPage),
