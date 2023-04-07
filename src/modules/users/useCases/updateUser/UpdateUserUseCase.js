@@ -1,3 +1,4 @@
+const { hashSync } = require('bcryptjs');
 const AppError = require('../../../../shared/infra/http/errors/AppError');
 const UsersRepository = require('../../infra/knex/repositories/UsersRepository');
 const UsersTokensRepository = require('../../infra/knex/repositories/UsersTokensRepository');
@@ -8,14 +9,40 @@ class UpdateUserUseCase {
     this.usersTokensRepository = new UsersTokensRepository();
   }
 
-  async execute({ id, name, email, isActive, isAdmin }) {
+  async execute({ id, name, email, password, confirmPassword, isActive, isAdmin }) {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new AppError('Usuário não encontrado.');
     }
 
-    await this.usersRepository.update({ id, name, email, isActive, isAdmin });
+    if (password) {
+      if (password !== confirmPassword) {
+        throw new AppError('Senhas não são iguais, tente novamente!.');
+      }
+
+      const validate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{6,}$/;
+
+      if (!validate.test(password)) {
+        throw new AppError(
+          'Senha incorreta! Deve conter no mínimo 6 caracteres, ao menos um dígito, ao menos uma letra minúscula, ao menos um caractere especial e ao menos letra maiúscula',
+          400,
+        );
+      }
+
+      const passwordHash = hashSync(password, 8);
+
+      await this.usersRepository.update({
+        id,
+        name,
+        email: email.toLowerCase(),
+        password: passwordHash,
+        isActive,
+        isAdmin,
+      });
+    } else {
+      await this.usersRepository.update({ id, name, email: email.toLowerCase(), isActive, isAdmin });
+    }
   }
 }
 
