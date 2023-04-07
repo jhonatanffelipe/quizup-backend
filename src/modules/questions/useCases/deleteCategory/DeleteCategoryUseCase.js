@@ -15,9 +15,9 @@ class DeleteCategoryUseCase {
       throw new AppError('Categoria não encontrada.');
     }
 
-    const alreadExistsTopisToCategory = await this.subjectsRepository.findAllByCategoryId(id);
+    const alreadExistsSubjectsisToCategory = await this.subjectsRepository.findAllByCategoryId({ categoryId: id });
 
-    if (alreadExistsTopisToCategory.length > 0) {
+    if (alreadExistsSubjectsisToCategory.subjects.length > 0) {
       throw new AppError('Categoria não pode ser deletada, existem assuntos vinculados.');
     }
 

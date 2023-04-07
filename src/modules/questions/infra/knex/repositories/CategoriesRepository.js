@@ -11,6 +11,14 @@ class CategoriesRepository {
   }
 
   async find({ page, perPage, description }) {
+    if (!page || page <= 0) {
+      page = 1;
+    }
+
+    if (!perPage || perPage <= 0) {
+      perPage = 5;
+    }
+
     try {
       const categories = await knex('categories')
         .whereILike('description', `%${description}%`)
@@ -19,7 +27,15 @@ class CategoriesRepository {
         .offset((page - 1) * perPage);
 
       const count = await knex('categories').whereILike('description', `%${description}%`).count();
-      return { categories, count: count[0]?.count > 0 ? Number(count[0].count) : 0 };
+
+      const response = {
+        perPage: Number(perPage),
+        currentPage: Number(page),
+        totalRows: count[0]?.count > 0 ? Number(count[0].count) : 0,
+        data: categories,
+      };
+
+      return response;
     } catch (error) {
       throw new AppError('Erro ao buscar por categorias. Por favor contate a equipe de suporte.');
     }

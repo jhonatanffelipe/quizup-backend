@@ -15,6 +15,14 @@ class SubjectsRepository {
   }
 
   async findAllByCategoryId({ page, perPage, categoryId }) {
+    if (!page || page <= 0) {
+      page = 1;
+    }
+
+    if (!perPage || perPage <= 0) {
+      perPage = 5;
+    }
+
     try {
       const subjects = await knex('subjects')
         .where({ categoryId })
@@ -23,7 +31,15 @@ class SubjectsRepository {
         .offset((page - 1) * perPage);
 
       const count = await knex('subjects').where({ categoryId }).count();
-      return { subjects, count: count[0]?.count > 0 ? Number(count[0].count) : 0 };
+
+      const response = {
+        perPage: Number(perPage),
+        currentPage: Number(page),
+        totalRows: count[0]?.count > 0 ? Number(count[0].count) : 0,
+        data: subjects,
+      };
+
+      return response;
     } catch (error) {
       throw new AppError('Erro ao buscar por assunto. Por favor contate a equipe de suporte.');
     }
