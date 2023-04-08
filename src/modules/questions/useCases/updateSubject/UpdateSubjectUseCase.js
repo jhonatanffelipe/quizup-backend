@@ -17,11 +17,12 @@ class UpdateSubjectUseCase {
       throw new AppError('Assunto não encontrado', 400);
     }
 
-    if (subject.previousSubjectId === previousSubjectId) {
+    if (subject?.previousSubjectId === previousSubjectId) {
       await this.subjectsRepository.update({
         id,
         description,
         isActive,
+        sequence: previousSubjectId === null ? 1 : subject.sequence,
       });
     } else {
       const previousSubject = await this.subjectsRepository.findById(previousSubjectId);
@@ -42,7 +43,7 @@ class UpdateSubjectUseCase {
         await this.subjectsRepository.update({
           id,
           previousSubjectId,
-          sequence: this.newPreviousSubjectSequence + 1,
+          sequence: previousSubjectId === null ? 1 : this.newPreviousSubjectSequence + 1,
           description,
           isActive,
         });
@@ -57,7 +58,7 @@ class UpdateSubjectUseCase {
           });
         }
       } else {
-        if (subject.previousSubjectId === null) {
+        if (subject?.previousSubjectId === null) {
           const nextSubject = await this.subjectsRepository.findByPreviousSubjectId(previousSubjectId);
 
           nextSubject.previousSubjectId = id;
@@ -78,7 +79,7 @@ class UpdateSubjectUseCase {
           }
           await this.subjectsRepository.update({
             id: subjectToUpdate[0].id,
-            previousSubjectId: subject.previousSubjectId,
+            previousSubjectId: subject?.previousSubjectId,
           });
         }
 

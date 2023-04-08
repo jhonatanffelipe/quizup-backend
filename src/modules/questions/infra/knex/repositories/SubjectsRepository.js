@@ -108,13 +108,14 @@ class SubjectsRepository {
     }
   }
 
-  async update({ id, previousSubjectId, sequence, description, image }) {
+  async update({ id, previousSubjectId, sequence, description, image, isActive }) {
     try {
       await knex('subjects').where({ id }).update({
         previousSubjectId,
         sequence,
         description,
         image,
+        isActive,
         updatedAt: new Date(),
       });
     } catch (error) {
@@ -126,7 +127,7 @@ class SubjectsRepository {
     try {
       await knex('subjects').where({ id }).del();
     } catch (error) {
-      throw new AppError('Erro ao atualizar assunto. Por favor contate a equipe de suporte.');
+      throw new AppError('Erro ao deletar assunto. Por favor contate a equipe de suporte.');
     }
   }
 }
