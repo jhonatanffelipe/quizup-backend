@@ -29,4 +29,7 @@ tmp/avatar/*
 !tmp/avatar/.gitkeep
 tmp/category/*
 !tmp/category/.gitkeep
+tmp/subject/*
+!tmp/subject/.gitkeep
+
 
