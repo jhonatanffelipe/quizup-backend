@@ -7,7 +7,7 @@ const DeleteSubjectController = require('../../../useCases/deleteSubject/DeleteS
 const ListSubjectByIdController = require('../../../useCases/listSubjectById/ListSubjectByIdContoller');
 const ListSubjectsContoller = require('../../../useCases/listSubjects/ListSubjectsContoller');
 const UpdateSubjectImageController = require('../../../useCases/updateSubjectImage/UpdateSubjectImageController');
-const UpdateSubjectSequenceController = require('../../../useCases/updateSubjectSequence/UpdateSubjectSequenceContoller');
+const UpdatePreviousSubjectController = require('../../../useCases/updateSubjectSequence/UpdatePreviousSubjectController');
 
 const subjectRoutes = Router();
 
@@ -16,7 +16,7 @@ const uploadImage = multer(uploadConfig);
 const createSubjectController = new CreateSubjectController();
 const listSubjectsContoller = new ListSubjectsContoller();
 const listSubjectByIdController = new ListSubjectByIdController();
-const updateSubjectSequenceController = new UpdateSubjectSequenceController();
+const updateSubjectSequenceController = new UpdatePreviousSubjectController();
 const updateSubjectImageController = new UpdateSubjectImageController();
 const deleteSubjectController = new DeleteSubjectController();
 

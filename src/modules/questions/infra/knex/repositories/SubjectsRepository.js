@@ -2,12 +2,13 @@ const knex = require('../../../../../config/db');
 const AppError = require('../../../../../shared/infra/http/errors/AppError');
 
 class SubjectsRepository {
-  async create({ sequence, description, categoryId }) {
+  async create({ categoryId, previousSubjectId, sequence, description }) {
     try {
       await knex('subjects').insert({
+        categoryId,
+        previousSubjectId,
         sequence,
         description,
-        categoryId,
       });
     } catch (error) {
       throw new AppError('Erro ao criar assunto. Por favor contate a equipe de suporte.');
@@ -55,6 +56,15 @@ class SubjectsRepository {
     }
   }
 
+  async findByPreviousSubjectId(previousSubjectId) {
+    try {
+      const subject = await knex('subjects').where({ previousSubjectId }).first();
+      return subject;
+    } catch (error) {
+      throw new AppError('Erro ao buscar por assunto por assunto anterior. Por favor contate a equipe de suporte.');
+    }
+  }
+
   async findByDescription({ description, categoryId }) {
     try {
       const subject = await knex('subjects').where({ description, categoryId }).first();
@@ -89,7 +99,7 @@ class SubjectsRepository {
     try {
       const subjects = await knex('subjects')
         .where('sequence', '>', initalSequence)
-        .andWhere('sequence', '<=', finalSequence)
+        .andWhere('sequence', '<', finalSequence)
         .orderBy('sequence', 'asc');
 
       return subjects;
@@ -98,9 +108,10 @@ class SubjectsRepository {
     }
   }
 
-  async update({ id, sequence, description, image }) {
+  async update({ id, previousSubjectId, sequence, description, image }) {
     try {
       await knex('subjects').where({ id }).update({
+        previousSubjectId,
         sequence,
         description,
         image,

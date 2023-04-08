@@ -41,7 +41,22 @@ class CreateSubjectUseCase {
       }
     }
 
-    await this.subjectsRepository.create({ sequence: currentSequence, description, categoryId });
+    await this.subjectsRepository.create({
+      previousSubjectId: previousSubjectId || null,
+      sequence: currentSequence,
+      description,
+      categoryId,
+    });
+
+    if (nextSubjects.length > 0) {
+      const newSubject = await this.subjectsRepository.findByDescription({ description, categoryId });
+
+      const nextSubject = nextSubjects[nextSubjects.length - 1];
+
+      nextSubject.previousSubjectId = newSubject.id;
+
+      await this.subjectsRepository.update(nextSubject);
+    }
   }
 }
 
