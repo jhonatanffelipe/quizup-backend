@@ -14,7 +14,17 @@ class ListSubjectByIdUseCase {
     }
 
     const subject = await this.subjectsRepository.findById(id);
+
+    if (!subject) {
+      throw new AppError('Assunto não encontrado.');
+    }
+
+    const previousSubject = await this.subjectsRepository.findById(
+      subject?.previousSubjectId ? subject?.previousSubjectId : null,
+    );
+
     subject.image = subject.image && `${process.env.BACKEND_APP_URL}/subject/${subject.image}`;
+    subject.previousSubject = previousSubject;
     return subject;
   }
 }
