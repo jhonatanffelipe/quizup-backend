@@ -56,9 +56,9 @@ class SubjectsRepository {
     }
   }
 
-  async findByPreviousSubjectId(previousSubjectId) {
+  async findByPreviousSubjectId({ previousSubjectId, categoryId }) {
     try {
-      const subject = await knex('subjects').where({ previousSubjectId }).first();
+      const subject = await knex('subjects').where({ previousSubjectId, categoryId }).first();
       return subject;
     } catch (error) {
       throw new AppError('Erro ao buscar por assunto por assunto anterior. Por favor contate a equipe de suporte.');
@@ -95,13 +95,13 @@ class SubjectsRepository {
     }
   }
 
-  async findBetween({ initalSequence, finalSequence }) {
+  async findBetween({ initalSequence, finalSequence, categoryId }) {
     try {
       const subjects = await knex('subjects')
         .where('sequence', '>', initalSequence)
         .andWhere('sequence', '<', finalSequence)
+        .andWhere('categoryId', categoryId)
         .orderBy('sequence', 'asc');
-
       return subjects;
     } catch (error) {
       throw new AppError('Erro ao buscar por assuntos do intervalo. Por favor contate a equipe de suporte.');

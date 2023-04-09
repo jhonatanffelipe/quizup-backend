@@ -31,13 +31,25 @@ class UpdateSubjectUseCase {
         throw new AppError('Assunto anterior não encontrado', 400);
       }
 
-      this.currentSubjectSequence = subject.sequence;
+      this.currentSubjectSequence = subject?.sequence;
       this.newPreviousSubjectSequence = previousSubject?.sequence || null;
 
       if (this.currentSubjectSequence > this.newPreviousSubjectSequence || previousSubjectId === null) {
+        const nextSubject = await this.subjectsRepository.findByPreviousSubjectId({
+          previousSubjectId: subject.id,
+          categoryId: subject.categoryId,
+        });
+
+        if (nextSubject) {
+          Object.assign(nextSubject, { previousSubjectId: subject.previousSubjectId });
+
+          await this.subjectsRepository.update(nextSubject);
+        }
+
         const subjectToUpdate = await this.subjectsRepository.findBetween({
           initalSequence: this.newPreviousSubjectSequence || 0,
           finalSequence: this.currentSubjectSequence,
+          categoryId: subject.categoryId,
         });
 
         await this.subjectsRepository.update({
@@ -58,10 +70,13 @@ class UpdateSubjectUseCase {
           });
         }
       } else {
-        if (subject?.previousSubjectId === null) {
-          const nextSubject = await this.subjectsRepository.findByPreviousSubjectId(previousSubjectId);
+        const nextSubject = await this.subjectsRepository.findByPreviousSubjectId({
+          previousSubjectId: previousSubject.id,
+          categoryId: subject.categoryId,
+        });
 
-          nextSubject.previousSubjectId = id;
+        if (nextSubject) {
+          Object.assign(nextSubject, { previousSubjectId: subject.id });
 
           await this.subjectsRepository.update(nextSubject);
         }
@@ -69,6 +84,7 @@ class UpdateSubjectUseCase {
         const subjectToUpdate = await this.subjectsRepository.findBetween({
           initalSequence: this.currentSubjectSequence || 0,
           finalSequence: this.newPreviousSubjectSequence + 1,
+          categoryId: subject.categoryId,
         });
         if (subjectToUpdate.length > 0) {
           for await (const currentSubject of subjectToUpdate) {
@@ -79,7 +95,7 @@ class UpdateSubjectUseCase {
           }
           await this.subjectsRepository.update({
             id: subjectToUpdate[0].id,
-            previousSubjectId: subject?.previousSubjectId,
+            previousSubjectId: subject?.previousSubjectId || null,
           });
         }
 
