@@ -1,12 +1,18 @@
 const AppError = require('../../../../shared/infra/http/errors/AppError');
+const UuidProvider = require('../../../../shared/providers/UuidProvider/UuidProvider');
 const TagsRepository = require('../../infra/knex/repositories/TagsRepository');
 
 class UpdateTagsUseCase {
   constructor() {
     this.tagsRepository = new TagsRepository();
+    this.uuidProvider = new UuidProvider();
   }
 
   async execute({ id, description, isActive }) {
+    if (!this.uuidProvider.validate(id)) {
+      throw new AppError('Id informado é inválido');
+    }
+
     const categoryAlreadExists = await this.tagsRepository.findById(id);
 
     if (!categoryAlreadExists) {

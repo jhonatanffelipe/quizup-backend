@@ -1,4 +1,5 @@
 const AppError = require('../../../../shared/infra/http/errors/AppError');
+const UuidProvider = require('../../../../shared/providers/UuidProvider/UuidProvider');
 const SubjectsRepository = require('../../infra/knex/repositories/SubjectsRepository');
 
 class UpdateSubjectUseCase {
@@ -8,9 +9,14 @@ class UpdateSubjectUseCase {
 
   constructor() {
     this.subjectsRepository = new SubjectsRepository();
+    this.uuidProvider = new UuidProvider();
   }
 
   async execute({ id, previousSubjectId, description, isActive }) {
+    if (!this.uuidProvider.validate(id)) {
+      throw new AppError('Id informado é inválido');
+    }
+
     const subject = await this.subjectsRepository.findById(id);
 
     if (!subject) {

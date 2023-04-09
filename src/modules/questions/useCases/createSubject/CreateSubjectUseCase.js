@@ -1,6 +1,6 @@
 const AppError = require('../../../../shared/infra/http/errors/AppError');
 const SubjectsRepository = require('../../infra/knex/repositories/SubjectsRepository');
-const UuidProvider = require('../../../../shared/providers/TokenProvider/UuidProvider');
+const UuidProvider = require('../../../../shared/providers/UuidProvider/UuidProvider');
 const CategoriesRepository = require('../../infra/knex/repositories/CategoriesRepository');
 
 class CreateSubjectUseCase {

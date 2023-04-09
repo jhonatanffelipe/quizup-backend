@@ -14,7 +14,7 @@ const categoriesRoutes = Router();
 
 const uploadImage = multer(uploadConfig);
 
-const categoryController = new CreateCategoryController();
+const createCategoryController = new CreateCategoryController();
 const listCategoriesController = new ListCategoriesController();
 const updateCategoryController = new UpdateCategoryController();
 const deleteCategoryController = new DeleteCategoryController();
@@ -23,7 +23,7 @@ const listCategoryByIdContoller = new ListCategoryByIdContoller();
 
 categoriesRoutes.use(ensureAuthenticated);
 categoriesRoutes.get('/', listCategoriesController.handle);
-categoriesRoutes.post('/', categoryController.handle);
+categoriesRoutes.post('/', createCategoryController.handle);
 categoriesRoutes.put('/:id', updateCategoryController.handle);
 categoriesRoutes.delete('/:id', deleteCategoryController.handle);
 categoriesRoutes.patch('/image/:id', uploadImage.single('image'), updateImageCategoryController.handle);

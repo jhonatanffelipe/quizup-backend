@@ -1,5 +1,5 @@
 const AppError = require('../../../../shared/infra/http/errors/AppError');
-const UuidProvider = require('../../../../shared/providers/TokenProvider/UuidProvider');
+const UuidProvider = require('../../../../shared/providers/UuidProvider/UuidProvider');
 const TagsRepository = require('../../infra/knex/repositories/TagsRepository');
 
 class ListTagByIdUseCase {

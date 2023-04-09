@@ -3,7 +3,7 @@ const path = require('path');
 const AppError = require('../../../../shared/infra/http/errors/AppError');
 const EtherealMailProvider = require('../../../../shared/providers/MailProvider/EtherealMailProvider');
 const EmailProvider = require('../../../../shared/providers/MailProvider/EmailProvider');
-const UuidProvider = require('../../../../shared/providers/TokenProvider/UuidProvider');
+const UuidProvider = require('../../../../shared/providers/UuidProvider/UuidProvider');
 const ResetPasswordTokensRepository = require('../../infra/knex/repositories/ResetPasswordTokensRepository');
 const UsersRepository = require('../../infra/knex/repositories/UsersRepository');
 

@@ -1,5 +1,5 @@
 const AppError = require('../../../../shared/infra/http/errors/AppError');
-const UuidProvider = require('../../../../shared/providers/TokenProvider/UuidProvider');
+const UuidProvider = require('../../../../shared/providers/UuidProvider/UuidProvider');
 const SubjectsRepository = require('../../infra/knex/repositories/SubjectsRepository');
 
 class ListSubjectsUseCase {
