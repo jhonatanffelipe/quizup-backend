@@ -6,7 +6,7 @@ class CreateQuestionTypeUseCase {
     this.questionsTypesRepository = new QuestionsTypesRepository();
   }
 
-  async execute({ code, title, description }) {
+  async execute({ code, title, description, isActive }) {
     const titleAlreadExists = await this.questionsTypesRepository.findByTitle(title);
 
     if (titleAlreadExists) {
@@ -19,7 +19,7 @@ class CreateQuestionTypeUseCase {
       throw new AppError('Já existe um tipo de questão cadastrado com esse código', 400);
     }
 
-    await this.questionsTypesRepository.create({ code, title, description });
+    await this.questionsTypesRepository.create({ code, title, description, isActive });
   }
 }
 

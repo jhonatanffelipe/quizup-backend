@@ -4,9 +4,9 @@ class CreateCategoryController {
   async handle(request, response) {
     const createQuestionTypeUseCase = new CreateQuestionTypeUseCase();
 
-    const { code, title, description } = request.body;
+    const { code, title, description, isActive } = request.body;
 
-    await createQuestionTypeUseCase.execute({ code, title, description });
+    await createQuestionTypeUseCase.execute({ code, title, description, isActive });
 
     return response.status(201).send();
   }

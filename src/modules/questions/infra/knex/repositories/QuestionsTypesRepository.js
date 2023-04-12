@@ -2,9 +2,9 @@ const knex = require('../../../../../config/db');
 const AppError = require('../../../../../shared/infra/http/errors/AppError');
 
 class QuestionsTypesRepository {
-  async create({ code, title, description }) {
+  async create({ code, title, description, isActive }) {
     try {
-      await knex('questionsTypes').insert({ code, title, description });
+      await knex('questionsTypes').insert({ code, title, description, isActive });
     } catch (error) {
       throw new AppError('Erro ao criar tipo de questão. Por favor contate a equipe de suporte.');
     }
@@ -74,9 +74,9 @@ class QuestionsTypesRepository {
     }
   }
 
-  async update({ id, code, title, description }) {
+  async update({ id, code, title, description, isActive }) {
     try {
-      await knex('questionsTypes').where({ id }).update({ code, title, description, updatedAt: new Date() });
+      await knex('questionsTypes').where({ id }).update({ code, title, description, isActive, updatedAt: new Date() });
     } catch (error) {
       throw new AppError('Erro ao atualizar tipo de questão. Por favor contate a equipe de suporte.');
     }

@@ -8,7 +8,7 @@ class UpdateQuestionTypeUseCase {
     this.uuidProvider = new UuidProvider();
   }
 
-  async execute({ id, code, title, description }) {
+  async execute({ id, code, title, description, isActive }) {
     if (!this.uuidProvider.validate(id)) {
       throw new AppError('Id informado é inválido');
     }
@@ -31,7 +31,7 @@ class UpdateQuestionTypeUseCase {
       throw new AppError('Já existe um tipo de questão cadastrado com esse código', 400);
     }
 
-    await this.questionsTypesRepository.update({ id, code, title, description });
+    await this.questionsTypesRepository.update({ id, code, title, description, isActive });
   }
 }
 

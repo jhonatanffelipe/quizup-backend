@@ -4,6 +4,7 @@ exports.up = knex =>
     table.text('code').notNullable();
     table.text('title').notNullable();
     table.text('description').notNullable();
+    table.boolean('isActive').defaultTo(true);
 
     table.timestamps(true, true, true);
   });

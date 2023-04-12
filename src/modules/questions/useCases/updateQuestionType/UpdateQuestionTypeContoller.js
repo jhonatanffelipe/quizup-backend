@@ -5,9 +5,9 @@ class UpdateQuestionTypeController {
     const updateQuestionTypeUseCase = new UpdateQuestionTypeUseCase();
 
     const { id } = request.params;
-    const { code, title, description } = request.body;
+    const { code, title, description, isActive } = request.body;
 
-    await updateQuestionTypeUseCase.execute({ id, code, title, description });
+    await updateQuestionTypeUseCase.execute({ id, code, title, description, isActive });
 
     return response.send();
   }
