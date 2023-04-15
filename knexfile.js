@@ -1,7 +1,7 @@
 module.exports = {
   client: 'pg',
   connection: {
-    database: 'quizup-db',
+    database: 'quizup',
     user: 'postgres',
     password: '123456',
   },
