@@ -4,8 +4,8 @@ exports.up = knex =>
     table.uuid('subjectId').notNullable();
     table.uuid('questionTypeId').notNullable();
     table.uuid('userId').notNullable();
+    table.text('title').notNullable();
     table.text('description').notNullable();
-    table.text('info').notNullable();
     table.boolean('isActive').defaultTo(true);
 
     table.timestamps(true, true, true);

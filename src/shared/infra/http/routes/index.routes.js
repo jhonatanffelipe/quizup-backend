@@ -16,6 +16,6 @@ routes.use('/password', passwordRoutes);
 routes.use('/categories', categoriesRoutes);
 routes.use('/subjects', subjectRoutes);
 routes.use('/tags', tagsRoutes);
-routes.use('/questions/types', questionsTypesRoutes);
+routes.use('/questions-types', questionsTypesRoutes);
 
 module.exports = routes;
