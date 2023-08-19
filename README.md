@@ -23,7 +23,7 @@ Os alunos, por sua vez, podem acessar as questões por meio de um aplicativo mó
 Além disso, a plataforma oferece recursos adicionais para tornar o processo de aprendizado mais divertido e desafiador, incluindo pontos e classificações para alunos, badges por conquistas e leaderboard para incentivar a competição saudável entre os estudantes. Esses recursos também ajudam a aumentar o engajamento dos alunos na atividade.
 
 Em resumo, este aplicativo é uma ferramenta completa e eficiente para professores que desejam otimizar a administração de trabalhos escolares e desafios para alunos, tornando o processo mais divertido, desafiador e fácil de gerenciar.
-      
+
 # Tecnologias utilizadas
 
 - [Node.js](https://nodejs.org/)
@@ -80,6 +80,9 @@ Para executar esta aplicação, siga os seguintes passos:
 - Com os bancos de dados e a aplicação rodando, criei as tabelas no banco e dados com o comando:
 
   ```bash
+  # Adicionar extenção
+  CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
   # Criar tabelas
   knex migrate:latest
   ```
